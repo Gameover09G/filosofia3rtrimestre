@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Filosofia · Bloc III: L'Acció</title>
+<title>Filosofia · Guia d'Estudi 1r BAT</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -21,315 +21,93 @@
     --sans: 'DM Sans', sans-serif;
     --mono: 'DM Mono', monospace;
   }
-
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
   html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 15px; line-height: 1.7; overflow-x: hidden; }
+  body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 1000; opacity: 0.5; }
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--sans);
-    font-size: 15px;
-    line-height: 1.7;
-    overflow-x: hidden;
+  /* ── TRIMESTRE SWITCHER ── */
+  .trimestre-bar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 950;
+    background: rgba(13,13,15,0.97);
+    border-bottom: 2px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    padding: 0; height: 44px; gap: 0;
   }
-
-  /* ── NOISE OVERLAY ── */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 1000;
-    opacity: 0.5;
+  .trim-btn {
+    flex: 1; max-width: 260px; height: 100%;
+    background: transparent; border: none; cursor: pointer;
+    font-family: var(--mono); font-size: 12px; font-weight: 500;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--muted); transition: all 0.25s;
+    border-bottom: 2px solid transparent; margin-bottom: -2px;
   }
+  .trim-btn:hover { color: var(--accent); }
+  .trim-btn.active { color: var(--accent); border-bottom-color: var(--accent); background: rgba(232,197,71,0.04); }
 
   /* ── NAV ── */
   nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 900;
-    background: rgba(13,13,15,0.92);
-    backdrop-filter: blur(16px);
+    position: fixed; top: 44px; left: 0; right: 0; z-index: 900;
+    background: rgba(13,13,15,0.92); backdrop-filter: blur(16px);
     border-bottom: 1px solid var(--border);
-    padding: 0 2rem;
-    height: 56px;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    overflow-x: auto;
+    padding: 0 2rem; height: 52px;
+    display: flex; align-items: center; gap: 0.5rem; overflow-x: auto;
   }
-
-  nav a {
-    color: var(--muted);
-    text-decoration: none;
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    white-space: nowrap;
-    padding: 6px 12px;
-    border-radius: 20px;
-    transition: all 0.2s;
-  }
+  nav a { color: var(--muted); text-decoration: none; font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap; padding: 6px 12px; border-radius: 20px; transition: all 0.2s; }
   nav a:hover { color: var(--accent); background: rgba(232,197,71,0.08); }
-  nav .nav-logo {
-    font-family: var(--serif);
-    font-size: 15px;
-    color: var(--accent);
-    font-weight: 700;
-    margin-right: 1rem;
-    flex-shrink: 0;
-  }
+  .nav-logo { font-family: var(--serif); font-size: 15px; color: var(--accent); font-weight: 700; margin-right: 1rem; flex-shrink: 0; }
 
   /* ── HERO ── */
-  .hero {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    padding: 6rem 4rem 4rem;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero::before {
-    content: '';
-    position: absolute;
-    top: -20%; right: -10%;
-    width: 600px; height: 600px;
-    background: radial-gradient(circle, rgba(124,106,245,0.12) 0%, transparent 70%);
-    pointer-events: none;
-  }
-  .hero::after {
-    content: '';
-    position: absolute;
-    bottom: 10%; left: -5%;
-    width: 400px; height: 400px;
-    background: radial-gradient(circle, rgba(232,197,71,0.07) 0%, transparent 70%);
-    pointer-events: none;
-  }
-
-  .hero-tag {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    color: var(--accent);
-    text-transform: uppercase;
-    margin-bottom: 1.5rem;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.2s forwards;
-  }
-
-  .hero h1 {
-    font-family: var(--serif);
-    font-size: clamp(3rem, 8vw, 7rem);
-    font-weight: 900;
-    line-height: 1;
-    margin-bottom: 1.5rem;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.4s forwards;
-  }
-  .hero h1 em {
-    font-style: italic;
-    color: var(--accent);
-  }
-
-  .hero-sub {
-    font-size: 1.1rem;
-    color: var(--muted);
-    max-width: 540px;
-    margin-bottom: 3rem;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.6s forwards;
-  }
-
-  .hero-pills {
-    display: flex; flex-wrap: wrap; gap: 0.75rem;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.8s forwards;
-  }
-  .pill {
-    padding: 8px 18px;
-    border: 1px solid var(--border);
-    border-radius: 30px;
-    font-size: 13px;
-    color: var(--muted);
-    cursor: pointer;
-    text-decoration: none;
-    transition: all 0.25s;
-  }
+  .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding: 8rem 4rem 4rem; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: -20%; right: -10%; width: 600px; height: 600px; background: radial-gradient(circle, rgba(124,106,245,0.12) 0%, transparent 70%); pointer-events: none; }
+  .hero::after { content: ''; position: absolute; bottom: 10%; left: -5%; width: 400px; height: 400px; background: radial-gradient(circle, rgba(232,197,71,0.07) 0%, transparent 70%); pointer-events: none; }
+  .hero-tag { font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em; color: var(--accent); text-transform: uppercase; margin-bottom: 1.5rem; opacity: 0; animation: fadeUp 0.8s 0.2s forwards; }
+  .hero h1 { font-family: var(--serif); font-size: clamp(3rem, 8vw, 7rem); font-weight: 900; line-height: 1; margin-bottom: 1.5rem; opacity: 0; animation: fadeUp 0.8s 0.4s forwards; }
+  .hero h1 em { font-style: italic; color: var(--accent); }
+  .hero-sub { font-size: 1.1rem; color: var(--muted); max-width: 540px; margin-bottom: 3rem; opacity: 0; animation: fadeUp 0.8s 0.6s forwards; }
+  .hero-pills { display: flex; flex-wrap: wrap; gap: 0.75rem; opacity: 0; animation: fadeUp 0.8s 0.8s forwards; }
+  .pill { padding: 8px 18px; border: 1px solid var(--border); border-radius: 30px; font-size: 13px; color: var(--muted); cursor: pointer; text-decoration: none; transition: all 0.25s; }
   .pill:hover { border-color: var(--accent); color: var(--accent); background: rgba(232,197,71,0.06); }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
 
   /* ── SECTIONS ── */
-  section {
-    padding: 5rem 4rem;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
-  .section-label {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    color: var(--accent);
-    text-transform: uppercase;
-    margin-bottom: 0.75rem;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-  }
-  .section-label::after {
-    content: '';
-    flex: 1;
-    max-width: 60px;
-    height: 1px;
-    background: var(--accent);
-    opacity: 0.4;
-  }
-
-  h2 {
-    font-family: var(--serif);
-    font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: 700;
-    margin-bottom: 3rem;
-    line-height: 1.2;
-  }
-
-  h3 {
-    font-family: var(--serif);
-    font-size: 1.4rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
-  }
+  section { padding: 5rem 4rem; max-width: 1200px; margin: 0 auto; }
+  .section-label { font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em; color: var(--accent); text-transform: uppercase; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.75rem; }
+  .section-label::after { content: ''; flex: 1; max-width: 60px; height: 1px; background: var(--accent); opacity: 0.4; }
+  h2 { font-family: var(--serif); font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; margin-bottom: 3rem; line-height: 1.2; }
+  h3 { font-family: var(--serif); font-size: 1.4rem; font-weight: 700; margin-bottom: 1rem; }
 
   /* ── CONCEPT GRID ── */
-  .concept-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.25rem;
-    margin-bottom: 3rem;
-  }
-
-  .concept-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.75rem;
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.2s, border-color 0.2s;
-  }
+  .concept-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; margin-bottom: 3rem; }
+  .concept-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 1.75rem; position: relative; overflow: hidden; transition: transform 0.2s, border-color 0.2s; }
   .concept-card:hover { transform: translateY(-3px); border-color: var(--accent2); }
-  .concept-card .card-num {
-    font-family: var(--mono);
-    font-size: 10px;
-    color: var(--muted);
-    letter-spacing: 0.15em;
-    margin-bottom: 1rem;
-  }
-  .concept-card h4 {
-    font-family: var(--serif);
-    font-size: 1.1rem;
-    font-weight: 700;
-    margin-bottom: 0.75rem;
-    color: var(--accent);
-  }
+  .concept-card .card-num { font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: 0.15em; margin-bottom: 1rem; }
+  .concept-card h4 { font-family: var(--serif); font-size: 1.1rem; font-weight: 700; margin-bottom: 0.75rem; color: var(--accent); }
   .concept-card p { font-size: 13.5px; color: var(--muted); line-height: 1.65; }
-  .concept-card .accent-line {
-    position: absolute;
-    top: 0; left: 0;
-    width: 3px; height: 100%;
-    background: var(--accent2);
-    border-radius: 2px 0 0 2px;
-  }
+  .concept-card .accent-line { position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: var(--accent2); border-radius: 2px 0 0 2px; }
 
   /* ── PHASES ── */
-  .phases {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    position: relative;
-    padding-left: 2rem;
-  }
-  .phases::before {
-    content: '';
-    position: absolute;
-    left: 0; top: 8px; bottom: 8px;
-    width: 2px;
-    background: linear-gradient(to bottom, var(--accent), var(--accent2), var(--accent3), var(--accent4));
-    border-radius: 2px;
-  }
-
-  .phase {
-    display: flex;
-    gap: 1.5rem;
-    align-items: flex-start;
-    padding: 1.25rem 0;
-  }
-
-  .phase-num {
-    width: 32px; height: 32px;
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-family: var(--mono);
-    font-size: 12px;
-    font-weight: 500;
-    flex-shrink: 0;
-    margin-left: -3rem;
-    margin-top: 2px;
-    border: 2px solid currentColor;
-  }
-
+  .phases { display: flex; flex-direction: column; gap: 0; position: relative; padding-left: 2rem; }
+  .phases::before { content: ''; position: absolute; left: 0; top: 8px; bottom: 8px; width: 2px; background: linear-gradient(to bottom, var(--accent), var(--accent2), var(--accent3), var(--accent4)); border-radius: 2px; }
+  .phase { display: flex; gap: 1.5rem; align-items: flex-start; padding: 1.25rem 0; }
+  .phase-num { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 12px; font-weight: 500; flex-shrink: 0; margin-left: -3rem; margin-top: 2px; border: 2px solid currentColor; }
   .phase:nth-child(1) .phase-num { color: var(--accent); background: rgba(232,197,71,0.1); }
   .phase:nth-child(2) .phase-num { color: var(--accent2); background: rgba(124,106,245,0.1); }
   .phase:nth-child(3) .phase-num { color: var(--accent3); background: rgba(232,93,74,0.1); }
   .phase:nth-child(4) .phase-num { color: var(--accent4); background: rgba(74,196,168,0.1); }
-
+  .phase:nth-child(5) .phase-num { color: var(--accent); background: rgba(232,197,71,0.1); }
   .phase-content h4 { font-family: var(--serif); font-weight: 700; margin-bottom: 0.4rem; }
   .phase-content p { font-size: 13.5px; color: var(--muted); }
 
   /* ── PHILOSOPHER CARDS ── */
   .philosophers-section { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-
-  .phil-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-    gap: 1.5rem;
-  }
-
-  .phil-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    overflow: hidden;
-    transition: transform 0.25s, box-shadow 0.25s;
-  }
-  .phil-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-  }
-
-  .phil-header {
-    padding: 2rem;
-    position: relative;
-    overflow: hidden;
-  }
-  .phil-header::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    opacity: 0.08;
-  }
-
+  .phil-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 1.5rem; }
+  .phil-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; transition: transform 0.25s, box-shadow 0.25s; }
+  .phil-card:hover { transform: translateY(-4px); box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
+  .phil-header { padding: 2rem; position: relative; overflow: hidden; }
+  .phil-card.descartes .phil-header { background: linear-gradient(135deg, rgba(124,106,245,0.2), transparent); border-bottom: 2px solid var(--accent2); }
+  .phil-card.hume .phil-header { background: linear-gradient(135deg, rgba(232,197,71,0.2), transparent); border-bottom: 2px solid var(--accent); }
+  .phil-card.kant2 .phil-header { background: linear-gradient(135deg, rgba(74,196,168,0.2), transparent); border-bottom: 2px solid var(--accent4); }
   .phil-card.hobbes .phil-header { background: linear-gradient(135deg, rgba(232,93,74,0.2), transparent); border-bottom: 2px solid var(--accent3); }
   .phil-card.rousseau .phil-header { background: linear-gradient(135deg, rgba(74,196,168,0.2), transparent); border-bottom: 2px solid var(--accent4); }
   .phil-card.locke .phil-header { background: linear-gradient(135deg, rgba(232,197,71,0.2), transparent); border-bottom: 2px solid var(--accent); }
@@ -338,12 +116,13 @@
   .phil-card.beauvoir .phil-header { background: linear-gradient(135deg, rgba(255,150,180,0.2), transparent); border-bottom: 2px solid #f5a0c0; }
   .phil-card.skinner .phil-header { background: linear-gradient(135deg, rgba(200,200,200,0.1), transparent); border-bottom: 2px solid var(--muted); }
   .phil-card.marx .phil-header { background: linear-gradient(135deg, rgba(232,93,74,0.25), transparent); border-bottom: 2px solid var(--accent3); }
-
   .phil-emoji { font-size: 2.5rem; margin-bottom: 1rem; display: block; }
   .phil-name { font-family: var(--serif); font-size: 1.6rem; font-weight: 900; margin-bottom: 0.25rem; }
   .phil-dates { font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: 0.1em; margin-bottom: 0.75rem; }
   .phil-tag { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 500; }
-
+  .descartes .phil-tag { background: rgba(124,106,245,0.15); color: var(--accent2); }
+  .hume .phil-tag { background: rgba(232,197,71,0.15); color: var(--accent); }
+  .kant2 .phil-tag { background: rgba(74,196,168,0.15); color: var(--accent4); }
   .hobbes .phil-tag { background: rgba(232,93,74,0.15); color: var(--accent3); }
   .rousseau .phil-tag { background: rgba(74,196,168,0.15); color: var(--accent4); }
   .locke .phil-tag { background: rgba(232,197,71,0.15); color: var(--accent); }
@@ -352,289 +131,106 @@
   .beauvoir .phil-tag { background: rgba(245,160,192,0.15); color: #f5a0c0; }
   .skinner .phil-tag { background: rgba(122,120,138,0.2); color: var(--muted); }
   .marx .phil-tag { background: rgba(232,93,74,0.15); color: var(--accent3); }
-
   .phil-body { padding: 1.75rem; }
-
-  .phil-block {
-    margin-bottom: 1.25rem;
-    padding-bottom: 1.25rem;
-    border-bottom: 1px solid var(--border);
-  }
+  .phil-block { margin-bottom: 1.25rem; padding-bottom: 1.25rem; border-bottom: 1px solid var(--border); }
   .phil-block:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
-
-  .phil-block-label {
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 0.5rem;
-  }
+  .phil-block-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.5rem; }
   .phil-block p { font-size: 13.5px; line-height: 1.65; }
-
-  .key-idea {
-    background: rgba(232,197,71,0.05);
-    border-left: 3px solid var(--accent);
-    padding: 0.75rem 1rem;
-    border-radius: 0 8px 8px 0;
-    font-size: 13px;
-    font-style: italic;
-    color: var(--text);
-    margin-top: 0.75rem;
-  }
-  .kant .key-idea { border-color: var(--accent2); background: rgba(124,106,245,0.05); }
+  .key-idea { background: rgba(232,197,71,0.05); border-left: 3px solid var(--accent); padding: 0.75rem 1rem; border-radius: 0 8px 8px 0; font-size: 13px; font-style: italic; color: var(--text); margin-top: 0.75rem; }
+  .kant .key-idea, .kant2 .key-idea { border-color: var(--accent4); background: rgba(74,196,168,0.05); }
+  .descartes .key-idea { border-color: var(--accent2); background: rgba(124,106,245,0.05); }
   .sartre .key-idea { border-color: #c07af5; background: rgba(192,122,245,0.05); }
   .beauvoir .key-idea { border-color: #f5a0c0; background: rgba(245,160,192,0.05); }
   .skinner .key-idea { border-color: var(--muted); background: rgba(122,120,138,0.05); }
   .marx .key-idea { border-color: var(--accent3); background: rgba(232,93,74,0.05); }
 
-  /* ── COMPARISON TABLE ── */
-  .table-wrapper {
-    overflow-x: auto;
-    border-radius: 12px;
-    border: 1px solid var(--border);
-  }
-
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 13.5px;
-  }
-
-  thead th {
-    background: var(--card);
-    padding: 1rem 1.25rem;
-    text-align: left;
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--muted);
-    border-bottom: 1px solid var(--border);
-    white-space: nowrap;
-  }
-
+  /* ── TABLE ── */
+  .table-wrapper { overflow-x: auto; border-radius: 12px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead th { background: var(--card); padding: 1rem 1.25rem; text-align: left; font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--border); white-space: nowrap; }
   tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
   tbody tr:hover { background: rgba(255,255,255,0.02); }
   tbody tr:last-child { border-bottom: none; }
-
   tbody td { padding: 1rem 1.25rem; vertical-align: top; line-height: 1.55; }
   tbody td:first-child { color: var(--muted); font-family: var(--mono); font-size: 11px; white-space: nowrap; }
-
-  .tag-h { color: var(--accent3); font-weight: 600; }
-  .tag-r { color: var(--accent4); font-weight: 600; }
-  .tag-l { color: var(--accent); font-weight: 600; }
+  .tag-h { color: var(--accent3); font-weight: 600; } .tag-r { color: var(--accent4); font-weight: 600; } .tag-l { color: var(--accent); font-weight: 600; }
 
   /* ── DIVIDER ── */
-  .divider {
-    width: 100%;
-    height: 1px;
-    background: linear-gradient(to right, transparent, var(--border), transparent);
-    margin: 0;
-  }
+  .divider { width: 100%; height: 1px; background: linear-gradient(to right, transparent, var(--border), transparent); }
 
-  /* ── FREEDOM SECTION ── */
-  .freedom-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.5rem;
-    margin-top: 2rem;
-  }
-
-  .freedom-card {
-    border-radius: 16px;
-    padding: 2rem;
-    border: 1px solid var(--border);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .freedom-card.determinisme {
-    background: linear-gradient(135deg, rgba(232,93,74,0.08), var(--card));
-    border-color: rgba(232,93,74,0.3);
-  }
-  .freedom-card.existencialisme {
-    background: linear-gradient(135deg, rgba(192,122,245,0.08), var(--card));
-    border-color: rgba(192,122,245,0.3);
-  }
-  .freedom-card.kant-f {
-    background: linear-gradient(135deg, rgba(124,106,245,0.08), var(--card));
-    border-color: rgba(124,106,245,0.3);
-  }
-
+  /* ── FREEDOM CARDS ── */
+  .freedom-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+  .freedom-card { border-radius: 16px; padding: 2rem; border: 1px solid var(--border); position: relative; overflow: hidden; }
+  .freedom-card.determinisme { background: linear-gradient(135deg, rgba(232,93,74,0.08), var(--card)); border-color: rgba(232,93,74,0.3); }
+  .freedom-card.existencialisme { background: linear-gradient(135deg, rgba(192,122,245,0.08), var(--card)); border-color: rgba(192,122,245,0.3); }
+  .freedom-card.kant-f { background: linear-gradient(135deg, rgba(124,106,245,0.08), var(--card)); border-color: rgba(124,106,245,0.3); }
   .freedom-card .fc-icon { font-size: 2rem; margin-bottom: 1rem; }
   .freedom-card h4 { font-family: var(--serif); font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem; }
   .freedom-card .fc-sub { font-family: var(--mono); font-size: 11px; color: var(--muted); margin-bottom: 1rem; }
   .freedom-card p { font-size: 13.5px; color: var(--muted); line-height: 1.65; }
-
-  .pros-cons {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.75rem;
-    margin-top: 1rem;
-  }
+  .pros-cons { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-top: 1rem; }
   .pros-cons div { font-size: 12px; padding: 0.5rem 0.75rem; border-radius: 6px; }
   .pro { background: rgba(74,196,168,0.1); color: var(--accent4); }
   .con { background: rgba(232,93,74,0.1); color: var(--accent3); }
 
   /* ── EXAM ── */
-  .exam-section {
-    background: var(--surface);
-    border-top: 1px solid var(--border);
-  }
-
-  .exam-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 2.5rem;
-    flex-wrap: wrap;
-    gap: 1rem;
-  }
-
-  .exam-progress {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    font-family: var(--mono);
-    font-size: 12px;
-    color: var(--muted);
-  }
-
-  .progress-bar-wrap {
-    width: 160px;
-    height: 4px;
-    background: var(--border);
-    border-radius: 4px;
-    overflow: hidden;
-  }
-  .progress-bar {
-    height: 100%;
-    background: var(--accent);
-    border-radius: 4px;
-    transition: width 0.4s ease;
-    width: 0%;
-  }
-
-  .question-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 2rem;
-    margin-bottom: 1.25rem;
-    transition: border-color 0.3s;
-  }
+  .exam-section { background: var(--surface); border-top: 1px solid var(--border); }
+  .exam-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2.5rem; flex-wrap: wrap; gap: 1rem; }
+  .exam-progress { display: flex; align-items: center; gap: 1rem; font-family: var(--mono); font-size: 12px; color: var(--muted); }
+  .progress-bar-wrap { width: 160px; height: 4px; background: var(--border); border-radius: 4px; overflow: hidden; }
+  .progress-bar { height: 100%; background: var(--accent); border-radius: 4px; transition: width 0.4s ease; width: 0%; }
+  .question-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 2rem; margin-bottom: 1.25rem; transition: border-color 0.3s; }
   .question-card.correct { border-color: var(--accent4); background: rgba(74,196,168,0.04); }
   .question-card.incorrect { border-color: var(--accent3); background: rgba(232,93,74,0.04); }
-
-  .q-num {
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    color: var(--muted);
-    margin-bottom: 0.75rem;
-    text-transform: uppercase;
-  }
-  .q-text {
-    font-family: var(--serif);
-    font-size: 1.05rem;
-    margin-bottom: 1.25rem;
-    line-height: 1.5;
-  }
-
+  .q-num { font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; color: var(--muted); margin-bottom: 0.75rem; text-transform: uppercase; }
+  .q-text { font-family: var(--serif); font-size: 1.05rem; margin-bottom: 1.25rem; line-height: 1.5; }
   .options { display: flex; flex-direction: column; gap: 0.6rem; }
-
-  .option {
-    padding: 0.75rem 1rem;
-    border-radius: 8px;
-    border: 1px solid var(--border);
-    cursor: pointer;
-    font-size: 13.5px;
-    color: var(--text);
-    background: transparent;
-    text-align: left;
-    transition: all 0.2s;
-    font-family: var(--sans);
-  }
-  .option:hover:not(:disabled) { border-color: var(--accent2); background: rgba(124,106,245,0.06); color: var(--text); }
+  .option { padding: 0.75rem 1rem; border-radius: 8px; border: 1px solid var(--border); cursor: pointer; font-size: 13.5px; color: var(--text); background: transparent; text-align: left; transition: all 0.2s; font-family: var(--sans); }
+  .option:hover:not(:disabled) { border-color: var(--accent2); background: rgba(124,106,245,0.06); }
   .option.selected-correct { border-color: var(--accent4); background: rgba(74,196,168,0.1); color: var(--accent4); }
   .option.selected-wrong { border-color: var(--accent3); background: rgba(232,93,74,0.1); color: var(--accent3); }
   .option.reveal-correct { border-color: var(--accent4); background: rgba(74,196,168,0.06); color: var(--accent4); }
   .option:disabled { cursor: default; }
-
-  .feedback {
-    margin-top: 1rem;
-    padding: 0.75rem 1rem;
-    border-radius: 8px;
-    font-size: 13px;
-    display: none;
-    line-height: 1.55;
-  }
+  .feedback { margin-top: 1rem; padding: 0.75rem 1rem; border-radius: 8px; font-size: 13px; display: none; line-height: 1.55; }
   .feedback.show { display: block; }
   .feedback.ok { background: rgba(74,196,168,0.1); color: var(--accent4); border: 1px solid rgba(74,196,168,0.2); }
   .feedback.fail { background: rgba(232,93,74,0.1); color: var(--accent3); border: 1px solid rgba(232,93,74,0.2); }
 
-  .exam-controls {
-    display: flex;
-    gap: 1rem;
-    margin-top: 2.5rem;
-    flex-wrap: wrap;
-  }
+  /* ── ESSAY QUESTION ── */
+  .essay-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 2rem; margin-bottom: 1.25rem; }
+  .essay-card.essay-revealed { border-color: var(--accent2); }
+  .essay-prompt { font-family: var(--serif); font-size: 1.05rem; margin-bottom: 1.25rem; line-height: 1.5; }
+  .essay-textarea { width: 100%; min-height: 120px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; color: var(--text); font-family: var(--sans); font-size: 13.5px; line-height: 1.65; resize: vertical; outline: none; transition: border-color 0.2s; }
+  .essay-textarea:focus { border-color: var(--accent2); }
+  .essay-reveal-btn { margin-top: 0.75rem; padding: 8px 18px; border-radius: 8px; border: 1px solid var(--accent2); background: transparent; color: var(--accent2); cursor: pointer; font-family: var(--sans); font-size: 13px; transition: all 0.2s; }
+  .essay-reveal-btn:hover { background: rgba(124,106,245,0.1); }
+  .essay-answer { display: none; margin-top: 1rem; padding: 1rem 1.25rem; background: rgba(124,106,245,0.06); border: 1px solid rgba(124,106,245,0.2); border-radius: 8px; font-size: 13px; line-height: 1.65; color: var(--text); }
+  .essay-answer.show { display: block; }
+  .essay-answer strong { color: var(--accent2); }
 
-  .btn {
-    padding: 12px 28px;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    font-family: var(--sans);
-    font-size: 14px;
-    font-weight: 500;
-    transition: all 0.2s;
-  }
+  .exam-controls { display: flex; gap: 1rem; margin-top: 2.5rem; flex-wrap: wrap; }
+  .btn { padding: 12px 28px; border-radius: 8px; border: none; cursor: pointer; font-family: var(--sans); font-size: 14px; font-weight: 500; transition: all 0.2s; }
   .btn-primary { background: var(--accent); color: #0d0d0f; }
   .btn-primary:hover { background: #f5d560; transform: translateY(-1px); }
   .btn-secondary { background: var(--card); color: var(--text); border: 1px solid var(--border); }
   .btn-secondary:hover { border-color: var(--accent2); }
-
-  .result-box {
-    display: none;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 2.5rem;
-    margin-top: 2rem;
-    text-align: center;
-  }
+  .result-box { display: none; background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 2.5rem; margin-top: 2rem; text-align: center; }
   .result-box.show { display: block; }
-  .result-score {
-    font-family: var(--serif);
-    font-size: 4rem;
-    font-weight: 900;
-    color: var(--accent);
-    display: block;
-    margin-bottom: 0.5rem;
-  }
+  .result-score { font-family: var(--serif); font-size: 4rem; font-weight: 900; color: var(--accent); display: block; margin-bottom: 0.5rem; }
   .result-msg { font-size: 1.1rem; color: var(--muted); }
 
-  /* ── INFO BOXES ── */
-  .info-box {
-    background: rgba(124,106,245,0.06);
-    border: 1px solid rgba(124,106,245,0.2);
-    border-radius: 10px;
-    padding: 1.25rem 1.5rem;
-    margin: 1.5rem 0;
-    font-size: 13.5px;
-    line-height: 1.65;
-    color: var(--text);
-  }
+  /* ── INFO BOX ── */
+  .info-box { background: rgba(124,106,245,0.06); border: 1px solid rgba(124,106,245,0.2); border-radius: 10px; padding: 1.25rem 1.5rem; margin: 1.5rem 0; font-size: 13.5px; line-height: 1.65; color: var(--text); }
   .info-box strong { color: var(--accent2); }
+  .info-box-yellow { background: rgba(232,197,71,0.06); border: 1px solid rgba(232,197,71,0.2); border-radius: 10px; padding: 1.25rem 1.5rem; margin: 1.5rem 0; font-size: 13.5px; line-height: 1.65; }
+  .info-box-yellow strong { color: var(--accent); }
+
+  /* ── TRIMESTRE CONTENT ── */
+  .trim-content { display: none; }
+  .trim-content.active { display: block; }
 
   /* ── RESPONSIVE ── */
-  @media (max-width: 768px) {
-    .hero, section { padding: 4rem 1.5rem; }
-    nav { padding: 0 1rem; }
-    .pros-cons { grid-template-columns: 1fr; }
-  }
+  @media (max-width: 768px) { .hero, section { padding: 4rem 1.5rem; } nav { padding: 0 1rem; } .pros-cons { grid-template-columns: 1fr; } }
 
   /* ── SCROLL ANIMATIONS ── */
   .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s, transform 0.6s; }
@@ -643,18 +239,38 @@
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
+<!-- TRIMESTRE SWITCHER -->
+<div class="trimestre-bar">
+  <button class="trim-btn" id="btn-t2" onclick="switchTrim('t2')">📚 2n Trimestre — El Coneixement</button>
+  <button class="trim-btn active" id="btn-t3" onclick="switchTrim('t3')">🎭 3r Trimestre — L'Acció Humana</button>
+</div>
+
+<!-- NAV T3 -->
+<nav id="nav-t3">
   <span class="nav-logo">φ Filosofia</span>
   <a href="#raopractica">Raó Pràctica</a>
   <a href="#accio">L'Acció</a>
   <a href="#llibertat">Llibertat</a>
   <a href="#filosofos">Filòsofs</a>
   <a href="#societat">Societat</a>
-  <a href="#examen">Examen</a>
+  <a href="#examen3">Examen T3</a>
 </nav>
 
-<!-- HERO -->
+<!-- NAV T2 -->
+<nav id="nav-t2" style="display:none">
+  <span class="nav-logo">φ Filosofia</span>
+  <a href="#veritat">Veritat</a>
+  <a href="#origen">Origen</a>
+  <a href="#filosofos2">Filòsofs T2</a>
+  <a href="#metode">Mètode</a>
+  <a href="#limits">Límits</a>
+  <a href="#examen2">Examen T2</a>
+</nav>
+
+<!-- ═══════════════════════════════════════ 3R TRIMESTRE ═══════════════════════════════════════ -->
+<div id="content-t3" class="trim-content active">
+
+<!-- HERO T3 -->
 <div class="hero">
   <div class="hero-tag">Bloc III · Curs 2025–2026</div>
   <h1>L'<em>Acció</em><br>Humana</h1>
@@ -665,7 +281,7 @@
     <a class="pill" href="#llibertat">Llibertat</a>
     <a class="pill" href="#filosofos">Filòsofs Clau</a>
     <a class="pill" href="#societat">Origen Societat</a>
-    <a class="pill" href="#examen">Examen 📝</a>
+    <a class="pill" href="#examen3">Examen 📝</a>
   </div>
 </div>
 
@@ -675,31 +291,12 @@
 <section id="raopractica">
   <div class="section-label">Tema 5</div>
   <h2>Raó Teòrica vs Raó <em style="font-style:italic;color:var(--accent)">Pràctica</em></h2>
-
   <div class="concept-grid reveal">
-    <div class="concept-card">
-      <div class="accent-line" style="background:var(--accent2)"></div>
-      <div class="card-num">01 — RAÓ TEÒRICA</div>
-      <h4>Ciència i Tècnica</h4>
-      <p>S'ocupa d'allò que <strong>és</strong>. Busca comprendre i modificar la realitat. Tracta el que és racional i determinat (fenòmens). Veritat com a criteri.</p>
-    </div>
-    <div class="concept-card">
-      <div class="accent-line" style="background:var(--accent)"></div>
-      <div class="card-num">02 — RAÓ PRÀCTICA</div>
-      <h4>Ètica, Dret, Política, Estètica</h4>
-      <p>S'ocupa d'allò que <strong>cal fer</strong>. Busca comprendre i modificar les conductes. Tracta el que és raonable i lliure (accions). Llibertat com a problema central.</p>
-    </div>
-    <div class="concept-card">
-      <div class="accent-line" style="background:var(--accent4)"></div>
-      <div class="card-num">03 — BIOÈTICA</div>
-      <h4>Confluència</h4>
-      <p>Àrea d'intersecció entre raó teòrica i pràctica. Sorgida per l'avenç tecnològic: clonació, experimentació animal, acarnissament terapèutic...</p>
-    </div>
+    <div class="concept-card"><div class="accent-line" style="background:var(--accent2)"></div><div class="card-num">01 — RAÓ TEÒRICA</div><h4>Ciència i Tècnica</h4><p>S'ocupa d'allò que <strong>és</strong>. Busca comprendre i modificar la realitat. Tracta el que és racional i determinat (fenòmens). Veritat com a criteri.</p></div>
+    <div class="concept-card"><div class="accent-line" style="background:var(--accent)"></div><div class="card-num">02 — RAÓ PRÀCTICA</div><h4>Ètica, Dret, Política, Estètica</h4><p>S'ocupa d'allò que <strong>cal fer</strong>. Busca comprendre i modificar les conductes. Tracta el que és raonable i lliure (accions). Llibertat com a problema central.</p></div>
+    <div class="concept-card"><div class="accent-line" style="background:var(--accent4)"></div><div class="card-num">03 — BIOÈTICA</div><h4>Confluència</h4><p>Àrea d'intersecció entre raó teòrica i pràctica. Sorgida per l'avenç tecnològic: clonació, experimentació animal, acarnissament terapèutic...</p></div>
   </div>
-
-  <div class="info-box reveal">
-    💡 <strong>Clau:</strong> Una veritat científica és inútil per decidir temes morals (ex: avortament). Un valor moral no té sentit en física. Però hi ha zones grises com la bioètica.
-  </div>
+  <div class="info-box reveal">💡 <strong>Clau:</strong> Una veritat científica és inútil per decidir temes morals (ex: avortament). Un valor moral no té sentit en física. Però hi ha zones grises com la bioètica.</div>
 </section>
 
 <div class="divider"></div>
@@ -708,84 +305,23 @@
 <section id="accio">
   <div class="section-label">Conceptes Base</div>
   <h2>Esdeveniments i <em style="font-style:italic;color:var(--accent)">Accions</em></h2>
-
   <div class="concept-grid reveal" style="margin-bottom:2rem">
-    <div class="concept-card">
-      <div class="accent-line" style="background:var(--muted)"></div>
-      <div class="card-num">ESDEVENIMENT</div>
-      <h4>Canvi en un estat de coses</h4>
-      <p>Es produeix en un interval de temps. <em>Ex: plou, un nadó deixa de plorar.</em> No implica consciència ni voluntat.</p>
-    </div>
-    <div class="concept-card">
-      <div class="accent-line" style="background:var(--accent)"></div>
-      <div class="card-num">ACCIÓ</div>
-      <h4>Esdeveniment conscient i voluntari</h4>
-      <p>Produïda per l'ésser humà amb <strong>intencionalitat</strong>. El subjecte és agent, no passiu. <em>Ex: desmayar-se NO és una acció.</em></p>
-    </div>
+    <div class="concept-card"><div class="accent-line" style="background:var(--muted)"></div><div class="card-num">ESDEVENIMENT</div><h4>Canvi en un estat de coses</h4><p>Es produeix en un interval de temps. <em>Ex: plou, un nadó deixa de plorar.</em> No implica consciència ni voluntat.</p></div>
+    <div class="concept-card"><div class="accent-line" style="background:var(--accent)"></div><div class="card-num">ACCIÓ</div><h4>Esdeveniment conscient i voluntari</h4><p>Produïda per l'ésser humà amb <strong>intencionalitat</strong>. El subjecte és agent, no passiu. <em>Ex: desmayar-se NO és una acció.</em></p></div>
   </div>
-
   <h3 class="reveal" style="margin-bottom:1.5rem">Les 4 Fases de l'Acció Racional</h3>
   <div class="phases reveal">
-    <div class="phase">
-      <div class="phase-num">1</div>
-      <div class="phase-content">
-        <h4>Preferència</h4>
-        <p>Seleccionem entre tots els desitjos aquell que volem assolir. El desig o finalitat que guiarà l'acció s'anomena <strong>intenció</strong>.</p>
-      </div>
-    </div>
-    <div class="phase">
-      <div class="phase-num">2</div>
-      <div class="phase-content">
-        <h4>Deliberació</h4>
-        <p>Anàlisi valorativa dels <strong>mitjans</strong> disponibles. Com més gran el coneixement, més racional l'acció. Inclou considerar possibles conflictes amb altres fins.</p>
-      </div>
-    </div>
-    <div class="phase">
-      <div class="phase-num">3</div>
-      <div class="phase-content">
-        <h4>Decisió</h4>
-        <p>El subjecte escull les <strong>intencions i mitjans</strong> que farà servir. Moment clau de la llibertat.</p>
-      </div>
-    </div>
-    <div class="phase">
-      <div class="phase-num">4</div>
-      <div class="phase-content">
-        <h4>Execució</h4>
-        <p>La producció del <strong>fet extern</strong>. Tota acció inclou accions prèvies subordinades i genera conseqüències en altres.</p>
-      </div>
-    </div>
+    <div class="phase"><div class="phase-num">1</div><div class="phase-content"><h4>Preferència</h4><p>Seleccionem entre tots els desitjos aquell que volem assolir. El desig o finalitat que guiarà l'acció s'anomena <strong>intenció</strong>.</p></div></div>
+    <div class="phase"><div class="phase-num">2</div><div class="phase-content"><h4>Deliberació</h4><p>Anàlisi valorativa dels <strong>mitjans</strong> disponibles. Com més gran el coneixement, més racional l'acció. Inclou considerar possibles conflictes amb altres fins.</p></div></div>
+    <div class="phase"><div class="phase-num">3</div><div class="phase-content"><h4>Decisió</h4><p>El subjecte escull les <strong>intencions i mitjans</strong> que farà servir. Moment clau de la llibertat.</p></div></div>
+    <div class="phase"><div class="phase-num">4</div><div class="phase-content"><h4>Execució</h4><p>La producció del <strong>fet extern</strong>. Tota acció inclou accions prèvies subordinades i genera conseqüències en altres.</p></div></div>
   </div>
-
   <h3 class="reveal" style="margin-top:3rem;margin-bottom:1.5rem">Influències i Condicionants Socials</h3>
   <div class="concept-grid reveal">
-    <div class="concept-card">
-      <div class="accent-line" style="background:var(--accent)"></div>
-      <div class="card-num">INFLUÈNCIES SOCIALS</div>
-      <h4>Condicionen els fins</h4>
-      <p>Trama d'accions de l'entorn (escola, amics, família, país) que configuren creences, preferències i desitjos. Expliquen les accions <em>a posteriori</em>, no les prediuen.</p>
-    </div>
-    <div class="concept-card">
-      <div class="accent-line" style="background:var(--accent2)"></div>
-      <div class="card-num">CONVENCIONS SOCIALS</div>
-      <h4>Condicionen els mitjans</h4>
-      <p>Acords tàcits o expressos sobre l'equivalència entre conducta i fi. <em>Ex: encaixar mans = acord; vestir negre = dol (a la Xina, blanc).</em> Varien per cultura.</p>
-    </div>
-    <div class="concept-card">
-      <div class="accent-line" style="background:var(--accent3)"></div>
-      <div class="card-num">NORMES SOCIALS</div>
-      <h4>Impedeixen certes accions</h4>
-      <p><strong>Informals:</strong> producte del costum, sancions difuses (mirades). <strong>Formals:</strong> decidides per autoritat, sancions concretes (multes).</p>
-    </div>
-    <div class="concept-card">
-      <div class="accent-line" style="background:var(--accent4)"></div>
-      <div class="card-num">IMPACTES SOCIALS</div>
-      <h4>Efectes sobre estats humans</h4>
-      <p>Trama d'accions que produeix efectes sobre el benestar físic o anímic. Som agents i pacients alhora. Difícil atribuir responsabilitats.</p>
-    </div>
-  </div>
-
-  <div class="info-box reveal" style="margin-top:1.5rem">
-    🤝 <strong>Acció cooperativa:</strong> El fi només s'assoleix quan el comparteixen diversos agents (ex: construir una catedral). Si cadascú busca el seu benefici personal → no hi ha cooperació, hi ha un <strong>esdeveniment</strong> (ex: embús). Vegeu el Dilema del Presoner.
+    <div class="concept-card"><div class="accent-line" style="background:var(--accent)"></div><div class="card-num">INFLUÈNCIES SOCIALS</div><h4>Condicionen els fins</h4><p>Trama d'accions de l'entorn (escola, amics, família, país) que configuren creences, preferències i desitjos. Expliquen les accions <em>a posteriori</em>, no les prediuen.</p></div>
+    <div class="concept-card"><div class="accent-line" style="background:var(--accent2)"></div><div class="card-num">CONVENCIONS SOCIALS</div><h4>Condicionen els mitjans</h4><p>Acords tàcits o expressos sobre l'equivalència entre conducta i fi. <em>Ex: encaixar mans = acord; vestir negre = dol (a la Xina, blanc).</em> Varien per cultura.</p></div>
+    <div class="concept-card"><div class="accent-line" style="background:var(--accent3)"></div><div class="card-num">NORMES SOCIALS</div><h4>Impedeixen certes accions</h4><p><strong>Informals:</strong> producte del costum, sancions difuses. <strong>Formals:</strong> decidides per autoritat, sancions concretes (multes).</p></div>
+    <div class="concept-card"><div class="accent-line" style="background:var(--accent4)"></div><div class="card-num">IMPACTES SOCIALS</div><h4>Efectes sobre estats humans</h4><p>Trama d'accions que produeix efectes sobre el benestar físic o anímic. Som agents i pacients alhora. Difícil atribuir responsabilitats.</p></div>
   </div>
 </section>
 
@@ -795,659 +331,577 @@
 <section id="llibertat">
   <div class="section-label">El Gran Problema</div>
   <h2>El Problema de la <em style="font-style:italic;color:var(--accent)">Llibertat</em></h2>
-
-  <div class="info-box reveal">
-    📌 La llibertat és condició de l'acció: sense poder escollir fins i mitjans, no hi ha acció, només esdeveniments. La llibertat necessita <strong>(1)</strong> absència de coaccions i <strong>(2)</strong> condicions reals per exercir-la.
-  </div>
-
+  <div class="info-box reveal">📌 La llibertat és condició de l'acció: sense poder escollir fins i mitjans, no hi ha acció, només esdeveniments. La llibertat necessita <strong>(1)</strong> absència de coaccions i <strong>(2)</strong> condicions reals per exercir-la.</div>
   <div class="freedom-cards reveal">
-    <div class="freedom-card determinisme">
-      <div class="fc-icon">⛓️</div>
-      <h4>Determinisme</h4>
-      <div class="fc-sub">Nega la llibertat</div>
-      <p>Les accions humanes estan inexorablement marcades per factors externs al control. Tres variants: <strong>biològic</strong> (gens), <strong>social</strong> (medi) i <strong>teològic</strong> (destí). Crítica: només es demostra a posteriori, mai s'ha predit una conducta sense marge d'error.</p>
-      <div class="key-idea">Si no soc lliure → tampoc sóc responsable moralment</div>
-    </div>
-    <div class="freedom-card existencialisme">
-      <div class="fc-icon">🌀</div>
-      <h4>Existencialisme (Sartre)</h4>
-      <div class="fc-sub">Llibertat absoluta</div>
-      <p>No només som lliures: <em>"estem condemnats a ser-ho"</em>. Res no ens lliga ni condiciona. Responsabilitat total i absoluta sobre tots els nostres actes. L'ésser humà és únicament el resultat de la seva pròpia invenció. Crítica: oblida que som éssers socials i naturals.</p>
-      <div class="key-idea" style="border-color:#c07af5;background:rgba(192,122,245,0.05)">Si tot és contingent → podria ser producte de l'atzar, no de la llibertat</div>
-    </div>
-    <div class="freedom-card kant-f">
-      <div class="fc-icon">⚖️</div>
-      <h4>Kant</h4>
-      <div class="fc-sub">Posició intermèdia</div>
-      <p>Distinció entre <strong>món fenomènic</strong> (determinat per lleis físiques) i <strong>món moral</strong> (necessita escollir). Llibertat = <em>causalitat no condicionada empíricament</em>. L'humà pot iniciar una cadena d'accions de les quals ell és l'única causa. Límit: l'imperatiu categòric.</p>
-      <div class="key-idea" style="border-color:var(--accent2);background:rgba(124,106,245,0.05)">Fins i tot una "estupidesa" puc cometre-la lliurement → per això sóc lliure</div>
-    </div>
+    <div class="freedom-card determinisme"><div class="fc-icon">⛓️</div><h4>Determinisme</h4><div class="fc-sub">Nega la llibertat</div><p>Les accions humanes estan inexorablement marcades per factors externs. Tres variants: <strong>biològic</strong> (gens), <strong>social</strong> (medi) i <strong>teològic</strong> (destí). Crítica: només es demostra a posteriori, mai s'ha predit una conducta sense marge d'error.</p><div class="key-idea" style="border-color:var(--accent3);background:rgba(232,93,74,0.05)">Si no soc lliure → tampoc sóc responsable moralment</div></div>
+    <div class="freedom-card existencialisme"><div class="fc-icon">🌀</div><h4>Existencialisme (Sartre)</h4><div class="fc-sub">Llibertat absoluta</div><p>No només som lliures: <em>"estem condemnats a ser-ho"</em>. Res no ens lliga ni condiciona. Responsabilitat total i absoluta sobre tots els nostres actes. Crítica: oblida que som éssers socials i naturals.</p><div class="key-idea" style="border-color:#c07af5;background:rgba(192,122,245,0.05)">Si tot és contingent → podria ser producte de l'atzar, no de la llibertat</div></div>
+    <div class="freedom-card kant-f"><div class="fc-icon">⚖️</div><h4>Kant</h4><div class="fc-sub">Posició intermèdia</div><p>Distinció entre <strong>món fenomènic</strong> (determinat per lleis físiques) i <strong>món moral</strong> (necessita escollir). Llibertat = <em>causalitat no condicionada empíricament</em>. L'humà pot iniciar una cadena d'accions de les quals ell és l'única causa.</p><div class="key-idea" style="border-color:var(--accent2);background:rgba(124,106,245,0.05)">Fins i tot una "estupidesa" puc cometre-la lliurement → per això sóc lliure</div></div>
   </div>
 </section>
 
 <div class="divider"></div>
 
-<!-- FILÒSOFS -->
+<!-- FILÒSOFS T3 -->
 <section id="filosofos" class="philosophers-section" style="max-width:100%;padding:5rem 4rem;">
   <div style="max-width:1200px;margin:0 auto">
-  <div class="section-label">Filòsofs Clau</div>
+  <div class="section-label">Filòsofs Clau — 3r Trim.</div>
   <h2>Pensadors <em style="font-style:italic;color:var(--accent)">Essencials</em></h2>
-
   <div class="phil-grid">
-
-    <!-- SKINNER -->
-    <div class="phil-card skinner reveal">
-      <div class="phil-header">
-        <span class="phil-emoji">🐀</span>
-        <div class="phil-name">B.F. Skinner</div>
-        <div class="phil-dates">1904 – 1990</div>
-        <span class="phil-tag">Determinisme Social · Conductisme</span>
-      </div>
-      <div class="phil-body">
-        <div class="phil-block">
-          <div class="phil-block-label">Teoria Principal</div>
-          <p><strong>Condicionament operant:</strong> la conducta humana està totalment determinada per les condicions ambientals. L'objectiu: preveure, controlar i dirigir les accions.</p>
-        </div>
-        <div class="phil-block">
-          <div class="phil-block-label">Mecanisme</div>
-          <p><strong>Reforç positiu</strong> → premia una conducta → el subjecte la repeteix.<br><strong>Càstig</strong> → reforç negatiu → el subjecte abandona la conducta.</p>
-        </div>
-        <div class="phil-block">
-          <div class="phil-block-label">Crítiques</div>
-          <p>1. <strong>Totalitarisme:</strong> afany de programar conductes individuals i socials.<br>2. <strong>Ignora la psique interior:</strong> no explica per què el premi és més efectiu que el càstig sense recórrer a la <em>motivació</em>.</p>
-          <div class="key-idea">Llibertat = ignorància sobre les causes reals de la conducta. Novel·la: <em>Walden 2</em></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- SARTRE -->
-    <div class="phil-card sartre reveal">
-      <div class="phil-header">
-        <span class="phil-emoji">🌑</span>
-        <div class="phil-name">Jean-Paul Sartre</div>
-        <div class="phil-dates">1905 – 1980</div>
-        <span class="phil-tag">Existencialisme</span>
-      </div>
-      <div class="phil-body">
-        <div class="phil-block">
-          <div class="phil-block-label">Idea Central</div>
-          <p>No només som lliures: <strong>"estem condemnats a ser-ho"</strong>. Tot és contingent, res predeterminat. L'ésser humà és únicament el resultat dels seus actes.</p>
-        </div>
-        <div class="phil-block">
-          <div class="phil-block-label">Llibertat Absoluta</div>
-          <p>Fins i tot quan actuem seguint normes externes, ho fem perquè <em>volem</em>. No hi ha cap element extern (moral o social) que coparticipi en la nostra decisió. Obra clau: <em>L'ésser i el no-res</em>.</p>
-        </div>
-        <div class="phil-block">
-          <div class="phil-block-label">Crítiques</div>
-          <p>Oblida que som éssers socials i naturals. Si les accions no estan causades → podrien ser producte de l'atzar, que no ens fa més lliures.</p>
-          <div class="key-idea" style="border-color:#c07af5;background:rgba(192,122,245,0.05)">"No som res més que els nostres actes" · El determinisme és una fugida de la responsabilitat</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- BEAUVOIR -->
-    <div class="phil-card beauvoir reveal">
-      <div class="phil-header">
-        <span class="phil-emoji">♀️</span>
-        <div class="phil-name">Simone de Beauvoir</div>
-        <div class="phil-dates">1908 – 1986</div>
-        <span class="phil-tag">Existencialisme Crític · Feminisme</span>
-      </div>
-      <div class="phil-body">
-        <div class="phil-block">
-          <div class="phil-block-label">Crítica a Sartre</div>
-          <p>No tothom parteix de les mateixes condicions. Situacions externes condicionen terriblement la llibertat. Una esclava en un harem no és tan lliure com una europea del s.XXI.</p>
-        </div>
-        <div class="phil-block">
-          <div class="phil-block-label">Mala Fe vs Opressió</div>
-          <p>Per a Sartre, no assumir la llibertat = <strong>mala fe</strong>. Beauvoir distingeix: si no és triada sinó imposada per obstacles externs → és <strong>opressió</strong>, no mala fe.</p>
-        </div>
-        <div class="phil-block">
-          <div class="phil-block-label">El Segon Sexe (1949)</div>
-          <p>La <strong>feminitat</strong> és una construcció social, no natural. La societat crea les dones com a alteritat (complement de l'home). Les priva de l'àmbit públic.</p>
-          <div class="key-idea" style="border-color:#f5a0c0;background:rgba(245,160,192,0.05)">"No es neix sent dona, s'arriba a ser-ho" · Solució: educació i igualtat de drets</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- KANT -->
-    <div class="phil-card kant reveal">
-      <div class="phil-header">
-        <span class="phil-emoji">⚖️</span>
-        <div class="phil-name">Immanuel Kant</div>
-        <div class="phil-dates">1724 – 1804</div>
-        <span class="phil-tag">Idealisme · Posició Intermèdia</span>
-      </div>
-      <div class="phil-body">
-        <div class="phil-block">
-          <div class="phil-block-label">Definició de Llibertat</div>
-          <p><strong>Causalitat no condicionada empíricament.</strong> L'humà pot ser causa de les seves pròpies accions (causalitat) sense estar condicionat per l'experiència (no empírica). Distinció fenomènic / moral.</p>
-        </div>
-        <div class="phil-block">
-          <div class="phil-block-label">L'Imperatiu Categòric</div>
-          <p>Límits interns que imposa la voluntat:<br>
-          ① <strong>Autonomia:</strong> actuar pels mandats de la pròpia voluntat (no per interès).<br>
-          ② <strong>Universalitat:</strong> el que faig ha de ser vàlid per a tothom.<br>
-          ③ <strong>Humanitat com a fi:</strong> mai usar una persona com a mer instrument.</p>
-        </div>
-        <div class="phil-block">
-          <div class="phil-block-label">Crítiques (Hegel, Marx, Habermas)</div>
-          <p>Kant oblida que l'individu és producte de relacions socials. L'autonomia absoluta és una ficció. Tampoc pot la maldat implicar responsabilitat moral si és heterònoma.</p>
-          <div class="key-idea" style="border-color:var(--accent2);background:rgba(124,106,245,0.05)">Exemple: el soldat que deserta tot i l'afusellament → cap coacció pot decidir per ell</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- HOBBES -->
-    <div class="phil-card hobbes reveal">
-      <div class="phil-header">
-        <span class="phil-emoji">🐉</span>
-        <div class="phil-name">Thomas Hobbes</div>
-        <div class="phil-dates">1588 – 1679</div>
-        <span class="phil-tag">Individualisme · Autoritarisme</span>
-      </div>
-      <div class="phil-body">
-        <div class="phil-block">
-          <div class="phil-block-label">Visió de l'Ésser Humà</div>
-          <p><strong>Pessimista:</strong> l'humà es mou per egoisme i temor. A l'estat natural: <em>"guerra de tots contra tots"</em> on sobreviuen els més forts. Cap llei, només violència.</p>
-        </div>
-        <div class="phil-block">
-          <div class="phil-block-label">Contracte Social</div>
-          <p>L'egoisme i la raó fan veure la impossibilitat de subsistir en l'estat natural → renúncia consensuada de la llibertat a canvi de <strong>seguretat</strong>.</p>
-        </div>
-        <div class="phil-block">
-          <div class="phil-block-label">El Leviathan</div>
-          <p>Poder fort i absolut en mans d'una sola instància (<em>"déu mortal"</em>). Els súbdits li deuen obediència absoluta. Si deixa d'assegurar la seguretat → el pacte es rescindeix.</p>
-          <div class="key-idea">Resultat: <strong>Monarquia absoluta / Dictadura</strong>. No basat en dret diví sinó en la violència humana.</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ROUSSEAU -->
-    <div class="phil-card rousseau reveal">
-      <div class="phil-header">
-        <span class="phil-emoji">🌿</span>
-        <div class="phil-name">Jean-Jacques Rousseau</div>
-        <div class="phil-dates">1712 – 1778</div>
-        <span class="phil-tag">Individualisme · Democràcia</span>
-      </div>
-      <div class="phil-body">
-        <div class="phil-block">
-          <div class="phil-block-label">Visió de l'Ésser Humà</div>
-          <p><strong>Optimista:</strong> bo per naturalesa. Influït pel mite del bon salvatge. Estat natural = innocent, lliure, igual, sense propietat privada. La civilització el <em>corromp</em>.</p>
-        </div>
-        <div class="phil-block">
-          <div class="phil-block-label">Origen de la Societat</div>
-          <p>No un pacte, sinó la <strong>propietat privada</strong>: <em>"l'home que va encercar un tros de terreny dient que era seu..."</em>. Comporta desigualtat, esclavitud, divisió del treball, corrupció.</p>
-        </div>
-        <div class="phil-block">
-          <div class="phil-block-label">Contracte Social i Paradoxa</div>
-          <p>Proposa renunciar als drets artificials (egoisme) per recuperar la llibertat natural. Autoritat = <strong>voluntat general</strong> (no un sobirà concret). Forma: democràcia directa.<br><br><em style="color:var(--accent3)">⚠️ Paradoxa:</em> malgrat defensar la igualtat, exclou les dones de la ciutadania i les considera inferiors per natura (<em>Emili, capítol Sofia</em>).</p>
-          <div class="key-idea">Crítiques: d'Alembert i <strong>Mary Wollstonecraft</strong> (Vindicació dels drets de la dona, 1792)</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- LOCKE -->
-    <div class="phil-card locke reveal">
-      <div class="phil-header">
-        <span class="phil-emoji">📜</span>
-        <div class="phil-name">John Locke</div>
-        <div class="phil-dates">1632 – 1704</div>
-        <span class="phil-tag">Individualisme · Liberalisme</span>
-      </div>
-      <div class="phil-body">
-        <div class="phil-block">
-          <div class="phil-block-label">Drets Naturals</div>
-          <p><strong>Vida, llibertat i propietat.</strong> Anteriors a la societat, per tant fonament i límit de qualsevol estat. Mandats bàsics: no matar, no violar, no robar.</p>
-        </div>
-        <div class="phil-block">
-          <div class="phil-block-label">Dos Estadis Naturals</div>
-          <p><strong>1r Estadi:</strong> idíl·lic, pau i respecte.<br><strong>2n Estadi:</strong> apareix la propietat privada → conflictes que l'estat natural no pot resoldre → necessitat d'àrbitre imparcial.</p>
-        </div>
-        <div class="phil-block">
-          <div class="phil-block-label">Contracte Social i Govern</div>
-          <p>Autoritat imparcial per consens. <strong>Separació de poders:</strong> legislatiu (propietaris), executiu (rei + judicial), federatiu (relacions exteriors). El parlament pot destituir el rei. <strong>Dret a la rebel·lió</strong> si s'atempten els drets naturals.</p>
-          <div class="key-idea">Resultat: <strong>Monarquia parlamentària</strong>. Liberalisme. Precursor de Montesquieu i les democràcies modernes.</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- MARX -->
-    <div class="phil-card marx reveal">
-      <div class="phil-header">
-        <span class="phil-emoji">⚒️</span>
-        <div class="phil-name">Karl Marx & Friedrich Engels</div>
-        <div class="phil-dates">1818–1883 · 1820–1895</div>
-        <span class="phil-tag">Socialisme · Materialisme Històric</span>
-      </div>
-      <div class="phil-body">
-        <div class="phil-block">
-          <div class="phil-block-label">Estat Natural</div>
-          <p>Societat animal primitiva: l'individu supeditat a la col·lectivitat (com un rusc d'abelles). La felicitat individual només és possible si primer es dóna comunitàriament.</p>
-        </div>
-        <div class="phil-block">
-          <div class="phil-block-label">Origen del Conflicte</div>
-          <p>La <strong>propietat privada</strong> apareix per l'egoisme individual d'alguns membres. Genera dues classes: <em>propietaris</em> (explotadors) i <em>treballadors</em> (explotats). La història = lluita de classes.</p>
-        </div>
-        <div class="phil-block">
-          <div class="phil-block-label">Societat Comunista</div>
-          <p>El capitalisme portaria la llavor de la seva destrucció → revolta del proletariat → dictadura del proletariat (reeducació) → societat comunista sense estat ni propietat.<br><br><em style="color:var(--accent3)">⚠️ Fracàs:</em> el model comunista mai va poder superar la dictadura. Caiguda del Mur de Berlín: 10 novembre 1989.</p>
-          <div class="key-idea" style="border-color:var(--accent3);background:rgba(232,93,74,0.05)">L'estat del benestar capitalista ha incorporat mesures de justícia social que suavitzen la desigualtat</div>
-        </div>
-      </div>
-    </div>
-
+    <div class="phil-card skinner reveal"><div class="phil-header"><span class="phil-emoji">🐀</span><div class="phil-name">B.F. Skinner</div><div class="phil-dates">1904 – 1990</div><span class="phil-tag">Determinisme Social · Conductisme</span></div><div class="phil-body"><div class="phil-block"><div class="phil-block-label">Teoria Principal</div><p><strong>Condicionament operant:</strong> la conducta humana està totalment determinada per les condicions ambientals. L'objectiu: preveure, controlar i dirigir les accions.</p></div><div class="phil-block"><div class="phil-block-label">Mecanisme</div><p><strong>Reforç positiu</strong> → premia una conducta → el subjecte la repeteix.<br><strong>Càstig</strong> → reforç negatiu → el subjecte abandona la conducta.</p></div><div class="phil-block"><div class="phil-block-label">Crítiques</div><p>1. <strong>Totalitarisme:</strong> afany de programar conductes individuals i socials.<br>2. <strong>Ignora la psique interior:</strong> no explica per què el premi és més efectiu que el càstig sense recórrer a la <em>motivació</em>.</p><div class="key-idea">Llibertat = ignorància sobre les causes reals de la conducta. Novel·la: <em>Walden 2</em></div></div></div></div>
+    <div class="phil-card sartre reveal"><div class="phil-header"><span class="phil-emoji">🌑</span><div class="phil-name">Jean-Paul Sartre</div><div class="phil-dates">1905 – 1980</div><span class="phil-tag">Existencialisme</span></div><div class="phil-body"><div class="phil-block"><div class="phil-block-label">Idea Central</div><p>No només som lliures: <strong>"estem condemnats a ser-ho"</strong>. Tot és contingent, res predeterminat. L'ésser humà és únicament el resultat dels seus actes.</p></div><div class="phil-block"><div class="phil-block-label">Llibertat Absoluta</div><p>Fins i tot quan actuem seguint normes externes, ho fem perquè <em>volem</em>. No hi ha cap element extern que coparticipi en la nostra decisió. Obra clau: <em>L'ésser i el no-res</em>.</p></div><div class="phil-block"><div class="phil-block-label">Crítiques</div><p>Oblida que som éssers socials i naturals. Si les accions no estan causades → podrien ser producte de l'atzar.</p><div class="key-idea" style="border-color:#c07af5;background:rgba(192,122,245,0.05)">"No som res més que els nostres actes" · El determinisme és una fugida de la responsabilitat</div></div></div></div>
+    <div class="phil-card beauvoir reveal"><div class="phil-header"><span class="phil-emoji">♀️</span><div class="phil-name">Simone de Beauvoir</div><div class="phil-dates">1908 – 1986</div><span class="phil-tag">Existencialisme Crític · Feminisme</span></div><div class="phil-body"><div class="phil-block"><div class="phil-block-label">Crítica a Sartre</div><p>No tothom parteix de les mateixes condicions. Situacions externes condicionen terriblement la llibertat. Una esclava en un harem no és tan lliure com una europea del s.XXI.</p></div><div class="phil-block"><div class="phil-block-label">Mala Fe vs Opressió</div><p>Per a Sartre, no assumir la llibertat = <strong>mala fe</strong>. Beauvoir distingeix: si no és triada sinó imposada per obstacles externs → és <strong>opressió</strong>, no mala fe.</p></div><div class="phil-block"><div class="phil-block-label">El Segon Sexe (1949)</div><p>La <strong>feminitat</strong> és una construcció social, no natural. La societat crea les dones com a alteritat (complement de l'home). Les priva de l'àmbit públic.</p><div class="key-idea" style="border-color:#f5a0c0;background:rgba(245,160,192,0.05)">"No es neix sent dona, s'arriba a ser-ho" · Solució: educació i igualtat de drets</div></div></div></div>
+    <div class="phil-card kant reveal"><div class="phil-header"><span class="phil-emoji">⚖️</span><div class="phil-name">Immanuel Kant</div><div class="phil-dates">1724 – 1804</div><span class="phil-tag">Idealisme · Posició Intermèdia</span></div><div class="phil-body"><div class="phil-block"><div class="phil-block-label">Definició de Llibertat</div><p><strong>Causalitat no condicionada empíricament.</strong> L'humà pot ser causa de les seves pròpies accions sense estar condicionat per l'experiència. Distinció fenomènic / moral.</p></div><div class="phil-block"><div class="phil-block-label">L'Imperatiu Categòric</div><p>① <strong>Autonomia:</strong> actuar pels mandats de la pròpia voluntat.<br>② <strong>Universalitat:</strong> el que faig ha de ser vàlid per a tothom.<br>③ <strong>Humanitat com a fi:</strong> mai usar una persona com a mer instrument.</p></div><div class="phil-block"><div class="phil-block-label">Crítiques</div><p>Kant oblida que l'individu és producte de relacions socials. L'autonomia absoluta és una ficció.</p><div class="key-idea" style="border-color:var(--accent2);background:rgba(124,106,245,0.05)">El soldat que deserta tot i l'afusellament → cap coacció pot decidir per ell</div></div></div></div>
+    <div class="phil-card hobbes reveal"><div class="phil-header"><span class="phil-emoji">🐉</span><div class="phil-name">Thomas Hobbes</div><div class="phil-dates">1588 – 1679</div><span class="phil-tag">Individualisme · Autoritarisme</span></div><div class="phil-body"><div class="phil-block"><div class="phil-block-label">Visió de l'Ésser Humà</div><p><strong>Pessimista:</strong> l'humà es mou per egoisme i temor. A l'estat natural: <em>"guerra de tots contra tots"</em> on sobreviuen els més forts. Cap llei, només violència.</p></div><div class="phil-block"><div class="phil-block-label">Contracte Social</div><p>L'egoisme i la raó fan veure la impossibilitat de subsistir en l'estat natural → renúncia consensuada de la llibertat a canvi de <strong>seguretat</strong>.</p></div><div class="phil-block"><div class="phil-block-label">El Leviathan</div><p>Poder fort i absolut en mans d'una sola instància (<em>"déu mortal"</em>). Si deixa d'assegurar la seguretat → el pacte es rescindeix.</p><div class="key-idea">Resultat: <strong>Monarquia absoluta / Dictadura</strong>. No basat en dret diví sinó en la violència humana.</div></div></div></div>
+    <div class="phil-card rousseau reveal"><div class="phil-header"><span class="phil-emoji">🌿</span><div class="phil-name">Jean-Jacques Rousseau</div><div class="phil-dates">1712 – 1778</div><span class="phil-tag">Individualisme · Democràcia</span></div><div class="phil-body"><div class="phil-block"><div class="phil-block-label">Visió de l'Ésser Humà</div><p><strong>Optimista:</strong> bo per naturalesa. Estat natural = innocent, lliure, igual, sense propietat privada. La civilització el <em>corromp</em>.</p></div><div class="phil-block"><div class="phil-block-label">Origen de la Societat</div><p>No un pacte, sinó la <strong>propietat privada</strong>: <em>"l'home que va encercar un tros de terreny..."</em>. Comporta desigualtat, esclavitud, divisió del treball, corrupció.</p></div><div class="phil-block"><div class="phil-block-label">Contracte i Paradoxa</div><p>Autoritat = <strong>voluntat general</strong>. Democràcia directa.<br><em style="color:var(--accent3)">⚠️ Paradoxa:</em> malgrat defensar la igualtat, exclou les dones de la ciutadania.</p><div class="key-idea">Crítiques: d'Alembert i <strong>Mary Wollstonecraft</strong> (Vindicació dels drets de la dona, 1792)</div></div></div></div>
+    <div class="phil-card locke reveal"><div class="phil-header"><span class="phil-emoji">📜</span><div class="phil-name">John Locke</div><div class="phil-dates">1632 – 1704</div><span class="phil-tag">Individualisme · Liberalisme</span></div><div class="phil-body"><div class="phil-block"><div class="phil-block-label">Drets Naturals</div><p><strong>Vida, llibertat i propietat.</strong> Anteriors a la societat, per tant fonament i límit de qualsevol estat.</p></div><div class="phil-block"><div class="phil-block-label">Dos Estadis Naturals</div><p><strong>1r Estadi:</strong> idíl·lic, pau i respecte.<br><strong>2n Estadi:</strong> apareix la propietat privada → conflictes → necessitat d'àrbitre imparcial.</p></div><div class="phil-block"><div class="phil-block-label">Contracte Social i Govern</div><p><strong>Separació de poders:</strong> legislatiu, executiu i federatiu. El parlament pot destituir el rei. <strong>Dret a la rebel·lió</strong> si s'atempten els drets naturals.</p><div class="key-idea">Resultat: <strong>Monarquia parlamentària</strong>. Liberalisme. Precursor de Montesquieu.</div></div></div></div>
+    <div class="phil-card marx reveal"><div class="phil-header"><span class="phil-emoji">⚒️</span><div class="phil-name">Karl Marx & Friedrich Engels</div><div class="phil-dates">1818–1883 · 1820–1895</div><span class="phil-tag">Socialisme · Materialisme Històric</span></div><div class="phil-body"><div class="phil-block"><div class="phil-block-label">Estat Natural</div><p>Societat animal primitiva: l'individu supeditat a la col·lectivitat (com un rusc d'abelles). La felicitat individual només és possible si primer es dóna comunitàriament.</p></div><div class="phil-block"><div class="phil-block-label">Origen del Conflicte</div><p>La <strong>propietat privada</strong> genera dues classes: <em>propietaris</em> (explotadors) i <em>treballadors</em> (explotats). La història = lluita de classes.</p></div><div class="phil-block"><div class="phil-block-label">Societat Comunista</div><p>El capitalisme portaria la llavor de la seva destrucció → revolta del proletariat → dictadura del proletariat (reeducació) → societat comunista sense estat ni propietat.<br><em style="color:var(--accent3)">⚠️ Fracàs:</em> el model comunista mai va poder superar la dictadura.</p><div class="key-idea" style="border-color:var(--accent3);background:rgba(232,93,74,0.05)">L'estat del benestar capitalista ha incorporat mesures de justícia social que suavitzen la desigualtat</div></div></div></div>
   </div>
   </div>
 </section>
 
 <div class="divider"></div>
 
-<!-- COMPARATIVA -->
+<!-- SOCIETAT -->
 <section id="societat">
   <div class="section-label">Tema 6</div>
   <h2>Origen de la <em style="font-style:italic;color:var(--accent)">Societat</em></h2>
-
-  <div class="info-box reveal">
-    🏛️ La pregunta per l'origen de la societat sorgeix als segles XVII-XVIII amb l'individualisme modern de la burgesia. Debat central: <strong>individu vs. societat</strong> — com reconciliar l'egoisme individual amb l'interès general?
-  </div>
-
+  <div class="info-box reveal">🏛️ La pregunta per l'origen de la societat sorgeix als segles XVII-XVIII amb l'individualisme modern de la burgesia. Debat central: <strong>individu vs. societat</strong> — com reconciliar l'egoisme individual amb l'interès general?</div>
   <div class="table-wrapper reveal" style="margin:2rem 0">
     <table>
-      <thead>
-        <tr>
-          <th>Aspecte</th>
-          <th class="tag-h">Hobbes</th>
-          <th class="tag-r">Rousseau</th>
-          <th class="tag-l">Locke</th>
-        </tr>
-      </thead>
+      <thead><tr><th>Aspecte</th><th class="tag-h">Hobbes</th><th class="tag-r">Rousseau</th><th class="tag-l">Locke</th></tr></thead>
       <tbody>
-        <tr>
-          <td>Naturalesa humana</td>
-          <td>Dolenta per natura (egoisme + temor)</td>
-          <td>Bona per natura (bon salvatge)</td>
-          <td>Bona, però amb conflictes potencials</td>
-        </tr>
-        <tr>
-          <td>Estat natural</td>
-          <td>Guerra de tots contra tots</td>
-          <td>Idíl·lic: lliure, igual, feliç, sense propietat</td>
-          <td>1r idíl·lic, 2n conflictiu per la propietat</td>
-        </tr>
-        <tr>
-          <td>Origen societat</td>
-          <td>Pacte per seguretat</td>
-          <td>Propietat privada (corruptora) → 2n pacte per recuperar igualtat</td>
-          <td>Pacte per àrbitre imparcial</td>
-        </tr>
-        <tr>
-          <td>Pacte: es renuncia a...</td>
-          <td>Llibertat (dret a la violència)</td>
-          <td>Drets artificials basats en l'egoisme</td>
-          <td>Judici propi de les causes pròpies</td>
-        </tr>
-        <tr>
-          <td>Autoritat</td>
-          <td>Leviathan (un sol individu)</td>
-          <td>Voluntat general (abstracta)</td>
-          <td>Govern amb separació de poders</td>
-        </tr>
-        <tr>
-          <td>Forma de govern</td>
-          <td>Dictadura / Monarquia absoluta</td>
-          <td>Democràcia directa (exc. dones)</td>
-          <td>Monarquia parlamentària liberal</td>
-        </tr>
+        <tr><td>Naturalesa humana</td><td>Dolenta per natura (egoisme + temor)</td><td>Bona per natura (bon salvatge)</td><td>Bona, però amb conflictes potencials</td></tr>
+        <tr><td>Estat natural</td><td>Guerra de tots contra tots</td><td>Idíl·lic: lliure, igual, feliç, sense propietat</td><td>1r idíl·lic, 2n conflictiu per la propietat</td></tr>
+        <tr><td>Origen societat</td><td>Pacte per seguretat</td><td>Propietat privada (corruptora) → 2n pacte per recuperar igualtat</td><td>Pacte per àrbitre imparcial</td></tr>
+        <tr><td>Pacte: es renuncia a...</td><td>Llibertat (dret a la violència)</td><td>Drets artificials basats en l'egoisme</td><td>Judici propi de les causes pròpies</td></tr>
+        <tr><td>Autoritat</td><td>Leviathan (un sol individu)</td><td>Voluntat general (abstracta)</td><td>Govern amb separació de poders</td></tr>
+        <tr><td>Forma de govern</td><td>Dictadura / Monarquia absoluta</td><td>Democràcia directa (exc. dones)</td><td>Monarquia parlamentària liberal</td></tr>
       </tbody>
     </table>
   </div>
+</section>
 
-  <h3 class="reveal" style="margin-top:2.5rem;margin-bottom:1.25rem">Teories Socialistes</h3>
+<div class="divider"></div>
+
+<!-- EXAMEN T3 -->
+<section id="examen3" class="exam-section" style="max-width:100%;padding:5rem 4rem">
+  <div style="max-width:900px;margin:0 auto">
+  <div class="section-label">Autocorrecció · 3r Trimestre</div>
+  <div class="exam-header">
+    <h2 style="margin-bottom:0">Examen <em style="font-style:italic;color:var(--accent)">T3 — L'Acció</em></h2>
+    <div class="exam-progress">
+      <span id="progress-text3">0 / 15</span>
+      <div class="progress-bar-wrap"><div class="progress-bar" id="progress-bar3"></div></div>
+    </div>
+  </div>
+  <div id="questions-container3"></div>
+  <div class="exam-controls">
+    <button class="btn btn-primary" onclick="checkAll3()">Corregir Examen</button>
+    <button class="btn btn-secondary" onclick="resetExam3()">Reiniciar</button>
+  </div>
+  <div class="result-box" id="result-box3">
+    <span class="result-score" id="result-score3">0/15</span>
+    <p class="result-msg" id="result-msg3"></p>
+  </div>
+  </div>
+</section>
+
+</div><!-- end t3 -->
+
+<!-- ═══════════════════════════════════════ 2N TRIMESTRE ═══════════════════════════════════════ -->
+<div id="content-t2" class="trim-content">
+
+<!-- HERO T2 -->
+<div class="hero" style="padding-top:10rem">
+  <div class="hero-tag">Bloc II · Curs 2025–2026</div>
+  <h1>El <em>Coneixe</em><br><em>ment</em> Humà</h1>
+  <p class="hero-sub">Veritat, origen del coneixement, Hume, Descartes i Kant. Guia visual completa per a l'examen de febrer.</p>
+  <div class="hero-pills">
+    <a class="pill" href="#veritat">Veritat</a>
+    <a class="pill" href="#origen">Origen</a>
+    <a class="pill" href="#filosofos2">Filòsofs T2</a>
+    <a class="pill" href="#metode">Mètode Científic</a>
+    <a class="pill" href="#limits">Límits</a>
+    <a class="pill" href="#examen2">Examen 📝</a>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- VERITAT -->
+<section id="veritat">
+  <div class="section-label">Tema 3 — Epistemologia</div>
+  <h2>El Problema de la <em style="font-style:italic;color:var(--accent)">Veritat</em></h2>
+  <div class="info-box reveal">📌 <strong>Coneixement vs. Creença:</strong> la creença és un convenciment subjectiu. El coneixement afegeix el requisit d'<strong>objectivitat</strong>: no n'hi ha prou amb estar segur, cal demostrar que és cert. La veritat en filosofia tracta les <em>proposicions</em> sobre la realitat, no la realitat en si.</div>
+
   <div class="concept-grid reveal">
     <div class="concept-card">
-      <div class="accent-line" style="background:var(--accent3)"></div>
-      <div class="card-num">MARX & ENGELS — Materialisme Històric</div>
-      <h4>La societat és anterior a l'individu</h4>
-      <p>L'ésser humà és naturalment social (com un rusc). L'individualisme és el problema, no la solució. L'estat = instrument de la classe dominant. Solució: supressió de la propietat privada.</p>
+      <div class="accent-line" style="background:var(--accent)"></div>
+      <div class="card-num">CRITERI 1 — ARISTÒTIL / TARSKI</div>
+      <h4>Veritat com a Correspondència</h4>
+      <p>Una proposició és vertadera quan s'adequa a la realitat. "Dir del que és que és, i del que no és que no és." Ex: "A la Lluna hi ha aigua" → veritat si els científics constaten que en contenen les mostres recollides.</p>
+      <div class="key-idea" style="border-color:var(--accent);background:rgba(232,197,71,0.05)">⚠️ Problema: (1) Només vàlid per proposicions empíriques. (2) Pressuposem que podem accedir a la realitat tal com és, cosa molt discutida.</div>
     </div>
     <div class="concept-card">
       <div class="accent-line" style="background:var(--accent2)"></div>
-      <div class="card-num">HEGEL — Teoria de l'Estat</div>
-      <h4>L'estat transcendeix l'individu</h4>
-      <p>L'estat té sentit i fins propis que van més enllà de la suma dels interessos particulars. L'autonomia absoluta kantiana és una ficció perquè l'individu és producte de les relacions socials.</p>
+      <div class="card-num">CRITERI 2 — HEGEL</div>
+      <h4>Veritat com a Coherència</h4>
+      <p>Una proposició és vertadera si no entra en contradicció amb la resta de proposicions ja acceptades. Ex: "El meu germà va travessar la paret" és fals perquè contradiu els principis de la física newtoniana. Aplicable a matemàtiques i lògica.</p>
+      <div class="key-idea" style="border-color:var(--accent2);background:rgba(124,106,245,0.05)">⚠️ Problema: acceptaria com a veritat les manies d'un paranoic si estiguessin integrades coherentment en un sistema.</div>
+    </div>
+    <div class="concept-card">
+      <div class="accent-line" style="background:var(--accent4)"></div>
+      <div class="card-num">CRITERI 3 — WILLIAM JAMES (s.XIX)</div>
+      <h4>Veritat com a Èxit / Utilitat</h4>
+      <p>És veritat allò que ens és útil, que ens dóna avantatges i conseqüències positives. Aquella teoria política o econòmica que resulti més beneficiosa per la societat seria vertadera.</p>
+      <div class="key-idea" style="border-color:var(--accent4);background:rgba(74,196,168,0.05)">⚠️ Problema: no permet diferenciar veritat de creença. "La Terra és plana" podria ser "vertadera" si algú la trobés útil.</div>
     </div>
   </div>
 </section>
 
 <div class="divider"></div>
 
-<!-- EXAMEN -->
-<section id="examen" class="exam-section" style="max-width:100%;padding:5rem 4rem">
-  <div style="max-width:900px;margin:0 auto">
-  <div class="section-label">Autocorrecció</div>
-  <div class="exam-header">
-    <h2 style="margin-bottom:0">Examen <em style="font-style:italic;color:var(--accent)">Final</em></h2>
-    <div class="exam-progress">
-      <span id="progress-text">0 / 15</span>
-      <div class="progress-bar-wrap"><div class="progress-bar" id="progress-bar"></div></div>
+<!-- ORIGEN DEL CONEIXEMENT -->
+<section id="origen">
+  <div class="section-label">Epistemologia</div>
+  <h2>Origen del <em style="font-style:italic;color:var(--accent)">Coneixement</em></h2>
+  <div class="info-box reveal">🔍 A partir de l'Edat Moderna (Galileu, Newton), la filosofia es pregunta: <strong>com és possible el coneixement científic?</strong> Sorgeix el debat sobre el paper dels <em>sentits</em> i la <em>raó</em> per fonamentar la veritat.</div>
+
+  <div class="concept-grid reveal">
+    <div class="concept-card">
+      <div class="accent-line" style="background:var(--accent2)"></div>
+      <div class="card-num">POSICIÓ 1</div>
+      <h4>Racionalisme</h4>
+      <p>El coneixement prové únicament de la <strong>raó</strong>. La ment posseeix <em>idees innates</em> anteriors a l'experiència. Desconfia dels sentits (ens enganyen). Representants: <strong>Descartes, Spinoza, Leibniz</strong> (s.XVII-XVIII).</p>
+    </div>
+    <div class="concept-card">
+      <div class="accent-line" style="background:var(--accent)"></div>
+      <div class="card-num">POSICIÓ 2</div>
+      <h4>Empirisme</h4>
+      <p>Només els <strong>sentits</strong> proporcionen coneixement. La ment és una <em>pissarra en blanc</em>: no hi ha idees innates. Tot coneixement prové de l'experiència i ha de ser comprovat per fets observats. Representants: <strong>Locke, Berkeley, Hume</strong>.</p>
+    </div>
+    <div class="concept-card">
+      <div class="accent-line" style="background:var(--accent4)"></div>
+      <div class="card-num">POSICIÓ 3</div>
+      <h4>Criticisme (Kant)</h4>
+      <p>Síntesi: accepta la importància <strong>tant dels sentits com de la raó</strong>. La <em>sensibilitat</em> aporta el material sensible (a posteriori); l'<em>enteniment</em> organitza aquest caos amb conceptes previs (a priori). "Conceptes sense sensacions són buits; sensacions sense conceptes, cegues."</p>
     </div>
   </div>
+</section>
 
-  <div id="questions-container"></div>
+<div class="divider"></div>
 
-  <div class="exam-controls">
-    <button class="btn btn-primary" onclick="checkAll()">Corregir Examen</button>
-    <button class="btn btn-secondary" onclick="resetExam()">Reiniciar</button>
-  </div>
+<!-- FILÒSOFS T2 -->
+<section id="filosofos2" class="philosophers-section" style="max-width:100%;padding:5rem 4rem;">
+  <div style="max-width:1200px;margin:0 auto">
+  <div class="section-label">Filòsofs Clau — 2n Trim.</div>
+  <h2>Pensadors <em style="font-style:italic;color:var(--accent)">del Coneixement</em></h2>
+  <div class="phil-grid">
 
-  <div class="result-box" id="result-box">
-    <span class="result-score" id="result-score">0/15</span>
-    <p class="result-msg" id="result-msg"></p>
+    <!-- DESCARTES -->
+    <div class="phil-card descartes reveal">
+      <div class="phil-header"><span class="phil-emoji">🤔</span><div class="phil-name">René Descartes</div><div class="phil-dates">1596 – 1650</div><span class="phil-tag">Racionalisme · Fundador del Mètode Modern</span></div>
+      <div class="phil-body">
+        <div class="phil-block"><div class="phil-block-label">Punt de Partida: El Dubte Metòdic</div><p>Per trobar una veritat indubtable, Descartes posa en dubte <strong>tot</strong>: (1) els sentits (a vegades ens enganyen), (2) la realitat (potser tot és un somni), (3) les matemàtiques (i si ens equivoquem sempre?).</p></div>
+        <div class="phil-block"><div class="phil-block-label">El Geni Maligne</div><p>Hipòtesi: un ser poderosament malvat que dedica totes les seves forces a portar-nos a l'error. Reforça el dubte total inicial. No és una creença, és un recurs metodològic.</p></div>
+        <div class="phil-block"><div class="phil-block-label">Les 3 Idees Innates</div><p>Malgrat dubtar-ho tot, descobreix:<br>① <strong>Jo-Pensant</strong>: "Jo penso, per tant jo sóc" (cogito ergo sum). Si dubto, algú dubta.<br>② <strong>Déu</strong>: la consciència de la pròpia imperfecció implica una idea prèvia de perfecció.<br>③ <strong>Món Extern</strong>: Déu (perfecte) no ens pot enganyar que existeixi el món exterior.</p><div class="key-idea" style="border-color:var(--accent2);background:rgba(124,106,245,0.05)">Revolucionari: arriba a aquestes veritats amb la sola ajuda de la raó, sense recórrer a la tradició ni l'experiència.</div></div>
+      </div>
+    </div>
+
+    <!-- HUME -->
+    <div class="phil-card hume reveal">
+      <div class="phil-header"><span class="phil-emoji">🧠</span><div class="phil-name">David Hume</div><div class="phil-dates">1711 – 1776</div><span class="phil-tag">Empirisme Radical · Escepticisme</span></div>
+      <div class="phil-body">
+        <div class="phil-block"><div class="phil-block-label">Impressions vs. Idees</div><p>Tot coneixement prové de l'experiència. La ment processa:<br>• <strong>Impressions</strong>: captacions sensibles directes, fortes i vivaces (ex: el dolor d'una cremada).<br>• <strong>Idees</strong>: representacions mentals de les impressions, menys intenses (ex: el record d'aquell dolor).</p></div>
+        <div class="phil-block"><div class="phil-block-label">Critica a Descartes</div><p>Hume nega les idees innates: <strong>cap idea sense impressió prèvia</strong>. Denuncia les grans afirmacions de Descartes:<br>① Nega el <em>jo-pensant</em>: no tenim cap impressió constant d'un jo, tan sols impressions particulars (dolor, alegria...).<br>② Nega la <em>realitat única</em>: tenim impressions particulars, no una impressió global de "la realitat".<br>③ Nega el coneixement de <em>Déu</em>: cap impressió de fets divins.</p></div>
+        <div class="phil-block"><div class="phil-block-label">Escepticisme</div><p>Les associacions d'idees sense impressió no ens donen coneixement sinó <strong>creences basades en el costum</strong> (hàbit psicològic). Ex: el principi de causalitat no és un coneixement objectiu, és un hàbit.</p><div class="key-idea" style="border-color:var(--accent);background:rgba(232,197,71,0.05)">Exemple de diferència: la impressió de la cremada (vivíssima) ≠ el record de la cremada (menys intens, és una idea).</div></div>
+      </div>
+    </div>
+
+    <!-- KANT EPISTEMOLOGIA -->
+    <div class="phil-card kant2 reveal">
+      <div class="phil-header"><span class="phil-emoji">🔬</span><div class="phil-name">Immanuel Kant</div><div class="phil-dates">1724 – 1804</div><span class="phil-tag">Criticisme · Síntesi Racional-Empírica</span></div>
+      <div class="phil-body">
+        <div class="phil-block"><div class="phil-block-label">La Síntesi Kantiana</div><p>Kant supera el <em>dogmatisme racionalista</em> (que rebutja l'experiència) i l'<em>escepticisme empirista</em> (que limita el coneixement a impressions particulars). El coneixement resulta de la unió de dues facultats:</p></div>
+        <div class="phil-block"><div class="phil-block-label">Sensibilitat (passiva)</div><p>Facultat que capta el <strong>caos de sensacions</strong> que reben els sentits. Aporta el material, l'element <em>a posteriori</em> (que el subjecte no té d'entrada). Per ella mateixa no és coneixement, però el fa possible.</p></div>
+        <div class="phil-block"><div class="phil-block-label">Enteniment (actiu)</div><p>Aporta els <strong>conceptes i regles</strong> per organitzar i unificar el caos sensible. Element <em>a priori</em> (la raó el té per endavant). És l'element formal del coneixement.</p><div class="key-idea" style="border-color:var(--accent4);background:rgba(74,196,168,0.05)">"Conceptes sense sensacions són buits, i sensacions sense conceptes, cegues." — El coneixement té lloc quan el subjecte experimenta passivament i alhora reconeix les sensacions amb els conceptes de la raó.</div></div>
+      </div>
+    </div>
+
   </div>
   </div>
 </section>
 
+<div class="divider"></div>
+
+<!-- MÈTODE CIENTÍFIC -->
+<section id="metode">
+  <div class="section-label">Tema 4 — Ciència</div>
+  <h2>El Mètode <em style="font-style:italic;color:var(--accent)">Científic</em></h2>
+
+  <div class="info-box reveal">🔭 <strong>Conceptes clau:</strong> <em>Hipòtesi</em> = resposta provisional a un problema (ha de ser contrastable, permetre previsions i ser simple). <em>Llei</em> = hipòtesi confirmada per l'experiència. <em>Teoria</em> = proposició general que pot incloure diverses lleis i hipòtesis (ex: Big Bang).</div>
+
+  <h3 class="reveal" style="margin-bottom:1.5rem;margin-top:2rem">Mètode Hipoteticodeductiu (Galileu → Popper)</h3>
+  <div class="phases reveal">
+    <div class="phase"><div class="phase-num">1</div><div class="phase-content"><h4>Aparició d'un Problema</h4><p>La investigació no parteix de zero: sempre hi ha un cos de coneixements previ. El problema és detectar un fet per al qual <strong>no hi ha una explicació satisfactòria</strong> dins el marc teòric existent. Ex: Galileu constata que esferes de diferent pes cauen al mateix temps (contradiu Aristòtil).</p></div></div>
+    <div class="phase"><div class="phase-num">2</div><div class="phase-content"><h4>Plantejament de la Hipòtesi</h4><p>L'investigador proposa una resposta provisional. Ha de ser: <strong>contrastable</strong>, <strong>coherent</strong> amb el que ja se sap i formulada <strong>matemàticament</strong> si és possible. Ex (Galileu): <em>v = k · t²</em> (la velocitat de caiguda depèn del temps).</p></div></div>
+    <div class="phase"><div class="phase-num">3</div><div class="phase-content"><h4>Contrastació Empírica</h4><p>Es posen a prova les <strong>conseqüències empíriques deduïdes</strong> de la hipòtesi, no la hipòtesi directament. Si es confirmen, la hipòtesi s'accepta provisionalment. Ex (Galileu): experiment del pla inclinat amb boles de billar i rellotge d'aigua. Si les prediccions no es compleixen → la hipòtesi queda <em>refutada</em>.</p></div></div>
+    <div class="phase"><div class="phase-num">4</div><div class="phase-content"><h4>Formulació de Lleis</h4><p>Si l'experiment confirma les prediccions → la hipòtesi s'incorpora provisionalment al cos de coneixements científics. <strong>Popper (falsacionisme):</strong> cap hipòtesi pot ser mai confirmada del tot; al màxim podem <em>refutar-la</em>. Les lleis científiques són sempre provisionals. Criteri de demarcació: una hipòtesi és científica si pot ser <em>falsada</em> empíricament.</p></div></div>
+  </div>
+
+  <div class="concept-grid reveal" style="margin-top:2.5rem">
+    <div class="concept-card">
+      <div class="accent-line" style="background:var(--muted)"></div>
+      <div class="card-num">MÈTODE INDUCTIU (precedent)</div>
+      <h4>Del particular al general</h4>
+      <p>Observació de casos particulars → generalització. <strong>Problemes:</strong> (1) No és possible una observació neutral (sempre partim d'un marc teòric). (2) Del coneixement de casos particulars no es pot inferir una llei universal. Hume i Popper ho demostren.</p>
+    </div>
+    <div class="concept-card">
+      <div class="accent-line" style="background:var(--accent2)"></div>
+      <div class="card-num">MÈTODE DEDUCTIU (ciències formals)</div>
+      <h4>Del general al particular</h4>
+      <p>Propi de la lògica i les matemàtiques. Parteix d'<strong>axiomes</strong> (indemostrables, acceptats com a punt de partida) i en dedueix <strong>teoremes</strong> (enunciats derivats lògicament). La veritat és formal (coherència), no empírica.</p>
+    </div>
+    <div class="concept-card">
+      <div class="accent-line" style="background:var(--accent3)"></div>
+      <div class="card-num">FALSACIONISME — KARL POPPER</div>
+      <h4>El criteri de demarcació</h4>
+      <p>Una hipòtesi és científica si <strong>pot ser falsada</strong>: si de la hipòtesi es poden deduir conseqüències empíriques que l'experiència podria contradir. "La velocitat depèn del temps" → científica. "La velocitat depèn de la disponibilitat divina" → no científica (no falsable). La ciència avança pels seus <em>errors</em>.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- LÍMITS DEL CONEIXEMENT -->
+<section id="limits">
+  <div class="section-label">Epistemologia</div>
+  <h2>Possibilitats i <em style="font-style:italic;color:var(--accent)">Límits</em> del Coneixement</h2>
+
+  <div class="freedom-cards reveal">
+    <div class="freedom-card determinisme" style="border-color:rgba(232,197,71,0.3);background:linear-gradient(135deg,rgba(232,197,71,0.06),var(--card))">
+      <div class="fc-icon">💬</div>
+      <h4>Dogmatisme</h4>
+      <div class="fc-sub">El coneixement absolut és possible</div>
+      <p>La capacitat intel·lectual humana és suficient per conèixer la realitat tal com és. Confia plenament en els sentits o en la raó humana. Acusació: és ingenu i acrítico (no aporta proves d'aqueta capacitat, parteix d'un acte de fe en l'ésser humà).</p>
+      <div class="key-idea" style="border-color:var(--accent);background:rgba(232,197,71,0.05)">Exemple: racionalistes com Descartes (Kant els acusarà de dogmatisme).</div>
+    </div>
+    <div class="freedom-card existencialisme">
+      <div class="fc-icon">❓</div>
+      <h4>Escepticisme</h4>
+      <div class="fc-sub">El coneixement objectiu és impossible</div>
+      <p>Tot coneixement és subjectiu i limitat per la manera de ser del subjecte cognoscent. L'únic refugi és el dubte permanent. Crítica: paradoxa → si no sabem res tampoc podem afirmar que no podem conèixer, perquè aquesta afirmació ja suposa un coneixement.</p>
+      <div class="key-idea" style="border-color:#c07af5;background:rgba(192,122,245,0.05)">Per a Kant, Hume va caure en l'escepticisme en limitar el coneixement a impressions sensibles particulars.</div>
+    </div>
+    <div class="freedom-card kant-f">
+      <div class="fc-icon">⚖️</div>
+      <h4>Criticisme (Kant)</h4>
+      <div class="fc-sub">Posició intermèdia fonamentada</div>
+      <p>Ni tot coneixement possible (dogmatisme) ni cap coneixement possible (escepticisme). El coneixement opera dins dels <strong>límits</strong> de l'enteniment i els sentits: no pot ser absolut, però dins d'aquests límits és possible un coneixement objectiu i necessari (ex: física).</p>
+      <div class="key-idea" style="border-color:var(--accent2);background:rgba(124,106,245,0.05)">La tasca de la filosofia: analitzar profundament el funcionament del coneixement humà, que ni empiristes ni racionalistes van dur a terme.</div>
+    </div>
+  </div>
+
+  <div class="table-wrapper reveal" style="margin-top:2.5rem">
+    <table>
+      <thead><tr><th>Posició</th><th>Representants</th><th>Tesi sobre el coneixement</th><th>Problema / Crítica</th></tr></thead>
+      <tbody>
+        <tr><td>Dogmatisme</td><td>Racionalistes (Descartes)</td><td>La raó pot conèixer-ho tot</td><td>Ingenu, no prova les seves afirmacions, acte de fe</td></tr>
+        <tr><td>Escepticisme</td><td>Hume (empirisme radical)</td><td>No podem tenir certesa de res objectiu</td><td>Paradoxa: afirmar que no sabem res ja és saber alguna cosa</td></tr>
+        <tr><td>Criticisme</td><td>Kant</td><td>Coneixement possible dins dels límits de sensibilitat i enteniment</td><td>Cap (és la posició que supera les altres dues)</td></tr>
+        <tr><td>Racionalisme metodòlogic</td><td>Descartes</td><td>Idees innates + deducció racional</td><td>Hume: les "idees innates" no responen a cap impressió</td></tr>
+        <tr><td>Empirisme</td><td>Hume, Locke, Berkeley</td><td>Coneixement = impressions + idees</td><td>Kant: les sensacions sense conceptes de la raó són "cegues"</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- EXAMEN T2 -->
+<section id="examen2" class="exam-section" style="max-width:100%;padding:5rem 4rem">
+  <div style="max-width:900px;margin:0 auto">
+  <div class="section-label">Autocorrecció · 2n Trimestre</div>
+  <div class="exam-header">
+    <h2 style="margin-bottom:0">Examen <em style="font-style:italic;color:var(--accent)">T2 — El Coneixement</em></h2>
+    <div class="exam-progress">
+      <span id="progress-text2">0 / 18</span>
+      <div class="progress-bar-wrap"><div class="progress-bar" id="progress-bar2"></div></div>
+    </div>
+  </div>
+
+  <div class="info-box" style="margin-bottom:2rem">
+    📝 Aquest examen combina <strong>preguntes tipus test</strong> (correccions automàtiques) i <strong>preguntes de redacció</strong> (model de resposta que pots revelar un cop escrita la teva). Bona sort!
+  </div>
+
+  <div id="questions-container2"></div>
+
+  <div class="exam-controls">
+    <button class="btn btn-primary" onclick="checkAll2()">Corregir Test</button>
+    <button class="btn btn-secondary" onclick="resetExam2()">Reiniciar</button>
+  </div>
+  <div class="result-box" id="result-box2">
+    <span class="result-score" id="result-score2">0/12</span>
+    <p class="result-msg" id="result-msg2"></p>
+  </div>
+  </div>
+</section>
+
+</div><!-- end t2 -->
+
 <script>
-const questions = [
+// ─── TRIMESTRE SWITCHER ───────────────────────────────────────────────────────
+function switchTrim(t) {
+  document.querySelectorAll('.trim-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.trim-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById('content-' + t).classList.add('active');
+  document.getElementById('btn-' + t).classList.add('active');
+  document.getElementById('nav-t2').style.display = t === 't2' ? 'flex' : 'none';
+  document.getElementById('nav-t3').style.display = t === 't3' ? 'flex' : 'none';
+  window.scrollTo(0, 0);
+  setTimeout(revealOnScroll, 100);
+}
+
+// ─── 3R TRIMESTRE QUESTIONS ───────────────────────────────────────────────────
+const questions3 = [
+  { q: "Quina és la diferència fonamental entre la raó teòrica i la raó pràctica?", opts: ["La raó teòrica és millor que la pràctica", "La raó teòrica s'ocupa d'allò que és; la pràctica d'allò que cal fer", "La raó pràctica estudia la natura; la teòrica l'ètica", "No hi ha diferències rellevants entre les dues"], correct: 1, explanation: "La raó teòrica (ciència) s'ocupa d'allò que és i busca la veritat. La raó pràctica (ètica, política, dret) s'ocupa de la conducta humana i el problema de la llibertat." },
+  { q: "Quin és l'ordre correcte de les fases de l'acció racional?", opts: ["Decisió → Preferència → Deliberació → Execució", "Execució → Deliberació → Preferència → Decisió", "Preferència → Deliberació → Decisió → Execució", "Deliberació → Preferència → Execució → Decisió"], correct: 2, explanation: "Les 4 fases són: (1) Preferència, (2) Deliberació, (3) Decisió i (4) Execució." },
+  { q: "Segons Skinner, la llibertat és...", opts: ["La capacitat de triar entre totes les opcions possibles", "La ignorància sobre les causes reals de la nostra conducta", "L'autonomia de la voluntat racional", "L'absència de coaccions externes"], correct: 1, explanation: "Per a Skinner, la llibertat no existeix: és simplement la ignorància sobre els factors ambientals (reforços i càstigs) que realment determinen la nostra conducta." },
+  { q: "Quina és la frase emblemàtica de Sartre sobre la llibertat?", opts: ["La llibertat és conèixer les causes de les teves accions", "Som lliures quan actuem bé i racionalment", "Estem condemnats a ser lliures", "La llibertat és una causalitat no condicionada empíricament"], correct: 2, explanation: "Sartre afirma que 'estem condemnats a ser lliures': no tenim altre remei que acceptar la nostra llibertat absoluta i la responsabilitat total dels nostres actes." },
+  { q: "Simone de Beauvoir critica Sartre perquè...", opts: ["Creu que la llibertat no existeix", "No tothom parteix de les mateixes condicions per exercir la llibertat", "Defensa el determinisme biològic de les dones", "Considera que l'estat ha de garantir la llibertat"], correct: 1, explanation: "Beauvoir accepta l'existencialisme però critica la llibertat absoluta de Sartre: situacions externes (opressió) poden impedir l'exercici real de la llibertat." },
+  { q: "Quina és la frase cèlebre de Simone de Beauvoir sobre la feminitat?", opts: ["La dona és per naturalesa inferior a l'home", "La llibertat és possible gràcies a l'educació", "No es neix sent dona, s'arriba a ser-ho", "La dona s'ha de definir en relació a si mateixa"], correct: 2, explanation: "Beauvoir afirma 'No es neix sent dona, s'arriba a ser-ho': la feminitat és una construcció social, no natural. La societat crea les dones com a alteritat impedint que es construeixin com a subjectes lliures." },
+  { q: "Com defineix Kant la llibertat?", opts: ["L'absència de tota norma o llei", "La capacitat de fer qualsevol cosa sense restriccions", "Una causalitat no condicionada empíricament", "El resultat de les condicions ambientals favorables"], correct: 2, explanation: "Per a Kant, la llibertat és 'causalitat no condicionada empíricament': l'humà pot ser causa de les seves pròpies accions sense estar determinat per l'experiència." },
+  { q: "L'imperatiu categòric de Kant inclou el principi de...", opts: ["Heteronomia: seguir les normes de l'autoritat", "Universalitat: el que faig ha de ser vàlid per a tothom", "Utilitarisme: buscar el màxim bé per al major nombre", "Egoisme racional: prioritzar els propis interessos"], correct: 1, explanation: "L'imperatiu categòric inclou tres principis: (1) Autonomia, (2) Universalitat ('el que no vulguis per tu no ho vulguis pels altres'), (3) Humanitat com a fi (mai usar una persona com a mer instrument)." },
+  { q: "Hobbes descriu l'estat natural com...", opts: ["Un estat idíl·lic de pau i igualtat", "Una societat comunista primitiva", "Una guerra de tots contra tots basada en l'egoisme", "Un estadi on les persones col·laboren naturalment"], correct: 2, explanation: "Per a Hobbes, l'ésser humà és dolent per natura. A l'estat natural, l'egoisme porta a un enfrontament de tots contra tots on la única llei és la violència." },
+  { q: "Quin tipus de govern legitima el contracte social de Hobbes?", opts: ["Democràcia directa", "Monarquia parlamentària liberal", "República federal", "Monarquia absoluta (Leviathan)"], correct: 3, explanation: "Hobbes justifica una monarquia absoluta: el Leviathan. Tot el poder recau en un sol individu al qual els súbdits deuen obediència absoluta. Si el monarca no garanteix la seguretat, es pot substituir." },
+  { q: "Rousseau atribueix la corrupció humana i la infelicitat a...", opts: ["La naturalesa violenta de l'ésser humà", "L'aparició de la propietat privada", "El contracte social original", "La falta d'educació filosòfica"], correct: 1, explanation: "Rousseau creu que l'ésser humà és bo per naturalesa, però l'aparició de la propietat privada porta desigualtat, esclavitud, divisió del treball i corrupció moral." },
+  { q: "Quina és la paradoxa de Rousseau?", opts: ["Defensa la llibertat però proposa un estat autoritari", "Defensa la igualtat però exclou les dones de la ciutadania", "Critica la propietat però té propietats personals", "Proposa democràcia però la considera inestable"], correct: 1, explanation: "La gran paradoxa de Rousseau és que, malgrat defensar la igualtat i la llibertat de tots els éssers humans, al capítol 'Sofia' d'Emili, exclou les dones de la ciutadania." },
+  { q: "Quins drets naturals reconeix Locke?", opts: ["Vida, seguretat i obediència", "Llibertat, igualtat i fraternitat", "Vida, llibertat i propietat", "Seguretat, propietat i democràcia"], correct: 2, explanation: "Locke reconeix tres drets naturals anteriors a la societat: vida, llibertat i propietat. Aquests fonaments han d'inspirar qualsevol forma de govern legítim." },
+  { q: "Per a Marx, la dictadura del proletariat és...", opts: ["L'etapa final de la història comunista", "Un estadi intermedi necessari de reeducació cap al comunisme", "Equivalent al capitalisme d'estat", "La mateixa cosa que la democràcia socialista"], correct: 1, explanation: "Marx planteja la dictadura del proletariat com un estadi intermedi necessari entre el capitalisme i la societat comunista: un període de reeducació per superar segles d'individualisme." },
+  { q: "Quin és l'argument principal contra el determinisme en general?", opts: ["El determinisme és una teoria científicament refutada", "El determinisme nega l'existència de Déu", "Només es pot demostrar a posteriori, mai s'ha predit una conducta sense marge d'error", "El determinisme contradiu les lleis de la física quàntica"], correct: 2, explanation: "La crítica principal al determinisme és que únicament es pot demostrar a posteriori: un cop ja s'han realitzat les accions. Ningú ha pogut predir sense marge d'error un comportament a partir de condicions prèvies." }
+];
+
+// ─── 2N TRIMESTRE QUESTIONS ───────────────────────────────────────────────────
+const questions2_test = [
+  { q: "Quin és el primer criteri de veritat i qui el va formular?", opts: ["Coherència (Hegel)", "Èxit (William James)", "Correspondència (Aristòtil)", "Pragmatisme (Dewey)"], correct: 2, explanation: "La veritat com a correspondència fou formulada per Aristòtil: 'Dir del que és que és, i del que no és que no és.' Consisteix a adequar la proposició a la realitat a la qual es refereix." },
+  { q: "Quin problema té el criteri de coherència de Hegel?", opts: ["No s'aplica a les matemàtiques", "Permetria acceptar com a veritat les manies d'un paranoic si fossin coherents internament", "És massa difícil de comprovar", "Contradiu el criteri de correspondència en tots els casos"], correct: 1, explanation: "El criteri de coherència permet acceptar com a vertaderes les manies persecutòries d'un paranoic sempre que estiguin integrades dins d'un sistema coherent. Només ens permet jutjar proposicions respecte un conjunt ja admès, però no jutjar la veritat d'aquest conjunt." },
+  { q: "Segons Hume, quina diferència hi ha entre una impressió i una idea?", opts: ["Les impressions vénen de la raó; les idees dels sentits", "Les impressions són més fortes i vivaces; les idees en són representacions menys intenses", "Les idees vénen de Déu; les impressions de l'experiència", "No hi ha diferència real entre impressions i idees"], correct: 1, explanation: "Per a Hume, les impressions són captacions sensibles directes (fortes i vivaces, com el dolor d'una cremada) i les idees en són les representacions mentals posteriors, menys intenses (com el record d'aquella cremada)." },
+  { q: "Per a Hume, la idea del jo-pensant de Descartes és...", opts: ["L'única certesa indubtable", "Una idea innata vàlida", "Una creença basada en el costum, sense cap impressió que la sustenti", "Una deducció matemàticament demostrable"], correct: 2, explanation: "Hume nega el jo-pensant cartesià: no tenim cap impressió constant i permanent d'un subjecte pensant, tan sols impressions particulars (dolor, tristesa, alegria...). La idea del jo-penso és un hàbit psicològic, no un coneixement." },
+  { q: "En el mètode hipoteticodeductiu, quin és el primer pas?", opts: ["Formular una hipòtesi", "Observar fets neutralment sense prejudicis", "Detectar un problema dins el cos de coneixements existent", "Realitzar un experiment"], correct: 2, explanation: "Contràriament al mètode inductiu (que comença per observació neutral), el mètode hipoteticodeductiu parteix de la detecció d'un problema: un fet per al qual no existeix explicació satisfactòria en el marc teòric actual." },
+  { q: "Quin és el criteri de demarcació de Popper?", opts: ["Una hipòtesi és científica si pot ser confirmada repetidament", "Una hipòtesi és científica si pot ser falsada empíricament", "Una hipòtesi és científica si es basa en idees innates racionals", "Una hipòtesi és científica si l'accepten experts reconeguts"], correct: 1, explanation: "Popper estableix que el criteri de demarcació entre ciència i no-ciència és la falsabilitat: una hipòtesi és científica si de les seves conseqüències es poden deduir prediccions que l'experiència podria contradir." },
+  { q: "Quin corrent filosòfic creu que la ment és com una 'pissarra en blanc'?", opts: ["Racionalisme", "Empirisme", "Criticisme kantià", "Escepticisme"], correct: 1, explanation: "L'empirisme (Locke, Hume) defensa que la ment no posseeix cap idea innata: és com una pissarra en blanc (tabula rasa) on les experiències sensorials van dibuixant els coneixements." },
+  { q: "El geni maligne de Descartes és...", opts: ["Una criatura real que Descartes creia que existia", "Un recurs metodòlogic per reforçar el dubte total i trobar una certesa indubtable", "El nom que Descartes dona a Satanàs", "Una metàfora per descriure els filòsofs rivals"], correct: 1, explanation: "El geni maligne no és una creença real de Descartes sinó un recurs metodòlogic: si admetem que un ser poderosament malvat podria enganyar-nos en tot, i malgrat això trobem alguna cosa indubtable, aleshores tenim una base sòlida per al coneixement." },
+  { q: "Quines dues facultats uneix Kant en la seva teoria del coneixement?", opts: ["Raó i fe", "Sensibilitat (passiva) i Enteniment (actiu)", "Intuïció i deducció", "Memòria i imaginació"], correct: 1, explanation: "Kant unifica la sensibilitat (facultat passiva que aporta les dades sensibles, a posteriori) i l'enteniment (facultat activa que aporta els conceptes per organitzar el caos sensible, a priori). El coneixement resulta de les dues." },
+  { q: "Com es diferencia una llei científica d'una teoria?", opts: ["La llei és menys important que la teoria", "Una teoria és una hipòtesi confirmada; una llei és una hipòtesi provisional", "Una llei és una hipòtesi confirmada per l'experiència; una teoria és una proposició general que pot incloure diverses lleis", "No hi ha diferència: teoria i llei signifiquen el mateix en ciència"], correct: 2, explanation: "La llei és una hipòtesi confirmada per l'experiència, aplicable a un tipus de fenòmens. La teoria és més general i pot incloure diverses lleis i hipòtesis no demostrades (ex: la teoria del Big-Bang)." },
+  { q: "El racionalisme es basa en quins punts programàtics?", opts: ["Observació empírica i inducció", "Idees innates i confiança absoluta en la raó per deduir el coneixement", "Impressions sensibles i associació d'idees", "Experimentació i falsació d'hipòtesis"], correct: 1, explanation: "El racionalisme parteix de: (1) la creença que la ment posseeix idees innates a priori, i (2) una confiança absoluta en la raó, capaç de descobrir per si sola aquestes idees i deduir d'elles tot el coneixement de la realitat." },
+  { q: "Quin és el problema del mètode inductiu, segons Hume i Popper?", opts: ["Que requereix massa experiments i és molt lent", "Que del coneixement de casos particulars no es pot inferir una llei universal ni predir el futur amb certesa", "Que ignora completament el paper de l'experiència", "Que és inútil per a les ciències naturals"], correct: 1, explanation: "Hume i Popper demostren que la inducció es basa en una creença falsa: del coneixement de casos passats no es pot concloure un coneixement universal. Una llei general exigiria haver experimentat tots els casos possibles, tasca impossible per als casos futurs." }
+];
+
+const questions2_essay = [
   {
-    q: "Quina és la diferència fonamental entre la raó teòrica i la raó pràctica?",
-    opts: [
-      "La raó teòrica és millor que la pràctica",
-      "La raó teòrica s'ocupa d'allò que és; la pràctica d'allò que cal fer",
-      "La raó pràctica estudia la natura; la teòrica l'ètica",
-      "No hi ha diferències rellevants entre les dues"
-    ],
-    correct: 1,
-    explanation: "La raó teòrica (ciència) s'ocupa d'allò que és i busca la veritat. La raó pràctica (ètica, política, dret) s'ocupa de la conducta humana i el problema de la llibertat."
+    q: "REDACCIÓ (1,5 pts) — Explica amb les teves paraules quin és el debat entre Hume i Descartes sobre l'origen del coneixement. Quin critica l'altre i per quins motius?",
+    answer: `<strong>Model de resposta:</strong><br><br>
+    Descartes (racionalisme) defensa que la ment posseeix idees innates que es descubreixen amb l'ús exclusiu de la raó, sense recórrer als sentits ni a l'experiència. A partir del dubte metòdic, arriba a tres idees innates: el jo-pensant (<em>cogito ergo sum</em>), Déu i el món extern.<br><br>
+    Hume (empirisme radical) critica frontalment Descartes: cap idea pot existir sense una impressió sensible prèvia que la sustenti. Analitza les tres idees innates cartesianes i les refuta una a una: (1) la idea del jo no respon a cap impressió constant (tenim impressions particulars de dolor, alegria, etc., però cap d'un subjecte permanent); (2) la idea del món extern va més enllà de les impressions particulars que tenim; (3) la idea de Déu no correspon a cap impressió. Per a Hume, totes tres no són coneixements, sinó creences basades en el costum.<br><br>
+    En definitiva: Descartes diu que la raó pot conèixer sense l'experiència; Hume diu que cap coneixement és possible sense impressió sensible prèvia.`
   },
   {
-    q: "Quin és l'ordre correcte de les fases de l'acció racional?",
-    opts: [
-      "Decisió → Preferència → Deliberació → Execució",
-      "Execució → Deliberació → Preferència → Decisió",
-      "Preferència → Deliberació → Decisió → Execució",
-      "Deliberació → Preferència → Execució → Decisió"
-    ],
-    correct: 2,
-    explanation: "Les 4 fases són: (1) Preferència [seleccionem la intenció], (2) Deliberació [avaluem els mitjans], (3) Decisió [escollim intencions i mitjans] i (4) Execució [el fet extern]."
+    q: "REDACCIÓ (1,5 pts) — Explica com encaixa la posició de Kant respecte a l'origen del coneixement amb la posició de Hume. Quines similituds i diferències hi ha entre criticisme i empirisme?",
+    answer: `<strong>Model de resposta:</strong><br><br>
+    Kant coneix i valora el pensament de Hume, al qual anomena "el que va interrompre el meu son dogmàtic". Accepta d'Hume que tot coneixement <em>comença</em> amb l'experiència: la sensibilitat és la facultat passiva que aporta el material sensible dels sentits (element a posteriori, igual que en l'empirisme). En aquest sentit, Kant s'alinea parcialment amb Hume.<br><br>
+    La diferència fonamental és que Kant, contràriament a Hume, no accepta que el coneixement es <em>redueixi</em> a impressions particulars i el seu record. Per a Kant, l'enteniment és una facultat activa que aporta conceptes i regles prèvies (a priori) per organitzar el caos de sensacions. Sense l'enteniment, les sensacions serien cegues i no hi hauria coneixement.<br><br>
+    Resum: Kant accepta l'empirisme parcialment (calen les sensacions) però el supera: el coneixement resultant és objectiu i necessari perquè l'enteniment hi aporta l'estructura racional. Kant diu: "conceptes sense sensacions són buits; sensacions sense conceptes, cegues."`
   },
   {
-    q: "Segons Skinner, la llibertat és...",
-    opts: [
-      "La capacitat de triar entre totes les opcions possibles",
-      "La ignorància sobre les causes reals de la nostra conducta",
-      "L'autonomia de la voluntat racional",
-      "La absència de coaccions externes"
-    ],
-    correct: 1,
-    explanation: "Per a Skinner, la llibertat no existeix com a tal: és simplement la ignorància sobre els factors ambientals (reforços i càstigs) que realment determinen la nostra conducta."
+    q: "REDACCIÓ (2 pts) — Explica detalladament els passos del mètode hipoteticodeductiu. Dona un exemple propi per complementar l'explicació.",
+    answer: `<strong>Model de resposta:</strong><br><br>
+    El mètode hipoteticodeductiu consta de quatre passos:<br><br>
+    <strong>1. Aparició d'un problema:</strong> La investigació no parteix de zero sinó d'un cos de coneixements existent. El punt de partida és detectar un fenomen que no té explicació satisfactòria en el marc teòric actual. <em>Exemple propi: observem que tots els crons d'un determinat bosc presenten les mateixes lesions en les branques sense causa aparent dins la teoria botànica existent.</em><br><br>
+    <strong>2. Plantejament de la hipòtesi:</strong> L'investigador formula una resposta provisional. Ha de ser contrastable, coherent amb el que ja se sap, i si és possible formulada matemàticament. <em>Continuació del exemple: hipòtesi → un fong paràsit específic que prolifera en condicions d'humitat superior al 70% causa les lesions.</em><br><br>
+    <strong>3. Contrastació:</strong> No es contrasta la hipòtesi directament sinó les seves conseqüències empíriques. <em>Exemple: si la hipòtesi és correcta, les zones del bosc amb humitat >70% hauries de presentar un 80% més de lesions que les zones seques. Dissenyem experiments i mesures al bosc per verificar-ho.</em><br><br>
+    <strong>4. Formulació de lleis (Popper):</strong> Si les prediccions es confirmen, la hipòtesi s'incorpora provisionalment al cos científic. Popper matisa que mai es pot confirmar del tot: al màxim podem <em>refutar-la</em>. Una sola observació contradictòria la invalida.`
   },
   {
-    q: "Quina és la frase emblemàtica de Sartre sobre la llibertat?",
-    opts: [
-      "La llibertat és conèixer les causes de les teves accions",
-      "Som lliures quan actuem bé i racionalment",
-      "Estem condemnats a ser lliures",
-      "La llibertat és una causalitat no condicionada empíricament"
-    ],
-    correct: 2,
-    explanation: "Sartre afirma que 'estem condemnats a ser lliures': no tenim altre remei que acceptar que no podem no ser lliures. La responsabilitat dels nostres actes recau únicament sobre nosaltres."
-  },
-  {
-    q: "Simone de Beauvoir critica Sartre perquè...",
-    opts: [
-      "Creu que la llibertat no existeix",
-      "No tothom parteix de les mateixes condicions per exercir la llibertat",
-      "Defensa el determinisme biològic de les dones",
-      "Considera que l'estat ha de garantir la llibertat"
-    ],
-    correct: 1,
-    explanation: "Beauvoir accepta l'existencialisme però critica la llibertat absoluta de Sartre: situacions externes (opressió) poden impedir l'exercici de la llibertat. Una esclava no és tan lliure com una europea del s.XXI."
-  },
-  {
-    q: "Quina és la frase cèlebre de Simone de Beauvoir sobre la feminitat?",
-    opts: [
-      "La dona és per naturalesa inferior a l'home",
-      "La llibertat és possible gràcies a l'educació",
-      "No es neix sent dona, s'arriba a ser-ho",
-      "La dona s'ha de definir en relació a si mateixa"
-    ],
-    correct: 2,
-    explanation: "Beauvoir afirma 'No es neix sent dona, s'arriba a ser-ho': la feminitat és una construcció social, no natural. La societat crea les dones com a alteritat (complement de l'home) impedint que es construeixin com a subjectes lliures."
-  },
-  {
-    q: "Com defineix Kant la llibertat?",
-    opts: [
-      "L'absència de tota norma o llei",
-      "La capacitat de fer qualsevol cosa sense restriccions",
-      "Una causalitat no condicionada empíricament",
-      "El resultat de les condicions ambientals favorables"
-    ],
-    correct: 2,
-    explanation: "Per a Kant, la llibertat és 'causalitat no condicionada empíricament': l'humà pot ser causa de les seves pròpies accions (causalitat) sense estar determinat per l'experiència (no empírica)."
-  },
-  {
-    q: "L'imperatiu categòric de Kant inclou el principi de...",
-    opts: [
-      "Heteronomia: seguir les normes de l'autoritat",
-      "Universalitat: el que faig ha de ser vàlid per a tothom",
-      "Utilitarisme: buscar el màxim bé per al major nombre",
-      "Egoisme racional: prioritzar els propis interessos"
-    ],
-    correct: 1,
-    explanation: "L'imperatiu categòric inclou tres principis: (1) Autonomia (seguir la pròpia voluntat, no normes externes), (2) Universalitat (vàlid per a tothom: 'el que no vulguis per tu no ho vulguis pels altres'), (3) Humanitat com a fi (mai usar una persona com a mer instrument)."
-  },
-  {
-    q: "Hobbes descriu l'estat natural com...",
-    opts: [
-      "Un estat idíl·lic de pau i igualtat",
-      "Una societat comunista primitiva",
-      "Una guerra de tots contra tots basada en l'egoisme",
-      "Un estadi on les persones col·laboren naturalment"
-    ],
-    correct: 2,
-    explanation: "Per a Hobbes, l'ésser humà és dolent per natura. A l'estat natural, l'egoisme porta a un enfrontament de tots contra tots on sobreviuen els més forts i la única llei és la violència."
-  },
-  {
-    q: "Quin tipus de govern legitima el contracte social de Hobbes?",
-    opts: [
-      "Democràcia directa",
-      "Monarquia parlamentària liberal",
-      "Republica federal",
-      "Monarquia absoluta (Leviathan)"
-    ],
-    correct: 3,
-    explanation: "Hobbes justifica una monarquia absoluta: el Leviathan. Tot el poder recau en un sol individu al qual els súbdits deuen obediència absoluta. Si el monarca no garanteix la seguretat, es pot substituir."
-  },
-  {
-    q: "Rousseau atribueix la corrupció humana i la infelicitat a...",
-    opts: [
-      "La naturalesa violenta de l'ésser humà",
-      "L'aparició de la propietat privada",
-      "El contracte social original",
-      "La falta d'educació filosòfica"
-    ],
-    correct: 1,
-    explanation: "Rousseau creu que l'ésser humà és bo per naturalesa, però l'aparició de la propietat privada ('l'home que va encercar un tros de terreny...') porta desigualtat, esclavitud, divisió del treball i corrupció moral."
-  },
-  {
-    q: "Quina és la paradoxa de Rousseau?",
-    opts: [
-      "Defensa la llibertat però proposa un estat autoritari",
-      "Defensa la igualtat però exclou les dones de la ciutadania",
-      "Critica la propietat però té propietats personals",
-      "Proposa democràcia però la considera inestable"
-    ],
-    correct: 1,
-    explanation: "La gran paradoxa de Rousseau és que, malgrat defensar la igualtat i la llibertat de tots els éssers humans, al capítol 'Sofia' d'Emili, exclou les dones de la ciutadania i les considera naturalment inferiors."
-  },
-  {
-    q: "Quins drets naturals reconeix Locke?",
-    opts: [
-      "Vida, seguretat i obediència",
-      "Llibertat, igualtat i fraternitat",
-      "Vida, llibertat i propietat",
-      "Seguretat, propietat i democràcia"
-    ],
-    correct: 2,
-    explanation: "Locke reconeix tres drets naturals anteriors a la societat: vida, llibertat i propietat. Aquests fonaments han d'inspirar qualsevol forma de govern legítim."
-  },
-  {
-    q: "Per a Marx, la dictadura del proletariat és...",
-    opts: [
-      "L'etapa final de la història comunista",
-      "Un estadi intermedi necessari de reeducació cap al comunisme",
-      "Equivalent al capitalisme d'estat",
-      "La mateixa cosa que la democràcia socialista"
-    ],
-    correct: 1,
-    explanation: "Marx planteja la dictadura del proletariat com un estadi intermedi necessari entre el capitalisme i la societat comunista: un període de reeducació per superar els segles d'individualisme i egoisme."
-  },
-  {
-    q: "Quin és l'argument principal contra el determinisme en general?",
-    opts: [
-      "El determinisme és una teoria científicament refutada",
-      "El determinisme nega l'existència de Déu",
-      "Només es pot demostrar a posteriori, mai s'ha predit una conducta sense marge d'error",
-      "El determinisme contradiu les lleis de la física quàntica"
-    ],
-    correct: 2,
-    explanation: "La crítica principal al determinisme és que únicament es pot demostrar a posteriori: un cop ja s'han realitzat les accions. Ningú ha pogut predir sense marge d'error un comportament a partir de condicions prèvies."
+    q: "REDACCIÓ (1 pt) — Digues quina posició sobre els límits del coneixement s'aplicaria millor als enunciats (a) i (b). Justifica-ho amb la definició corresponent i relaciona-ho amb les frases:\n(a) 'Amb l'únic ajut del mètode racional, es pot assolir qualsevol coneixement'\n(b) 'Només sé que no sé res'",
+    answer: `<strong>Model de resposta:</strong><br><br>
+    <strong>(a) "Amb l'únic ajut del mètode racional, es pot assolir qualsevol coneixement"</strong><br>
+    Correspon al <strong>Dogmatisme</strong>. El dogmatisme afirma que la capacitat intel·lectual humana és suficient per conèixer la realitat tal com és, i confia plenament en la raó o els sentits. La frase expressa confiança il·limitada en el poder del mètode racional, sense reconèixer cap límit al coneixement humà. Kant criticaria aquesta posició: no analitza profundament les capacitats i límits de la raó, parteix d'un acte de fe en l'ésser humà.<br><br>
+    <strong>(b) "Només sé que no sé res"</strong><br>
+    Correspon a l'<strong>Escepticisme</strong>. L'escepticisme nega la possibilitat d'obtenir cap certesa objectiva, ja que tot coneixement estaria influenciat per la subjectivitat del cognoscent. La frase és la seva expressió màxima. Kant objectaria que aquesta posició conté una paradoxa: afirmar que no saps res ja suposa tenir algun coneixement (saber que no saps).`
   }
 ];
 
-let answered = new Array(questions.length).fill(false);
-let correct_count = 0;
+// ─── BUILD T3 ─────────────────────────────────────────────────────────────────
+let selected3 = new Array(questions3.length).fill(null);
+let answered3 = new Array(questions3.length).fill(false);
 
-function buildQuestions() {
-  const container = document.getElementById('questions-container');
+function buildQuestions3() {
+  const container = document.getElementById('questions-container3');
   container.innerHTML = '';
-  questions.forEach((q, i) => {
+  questions3.forEach((q, i) => {
     const card = document.createElement('div');
     card.className = 'question-card';
-    card.id = `qcard-${i}`;
-
-    const opts = q.opts.map((opt, j) => `
-      <button class="option" id="opt-${i}-${j}" onclick="selectOption(${i},${j})">
-        <span style="font-family:var(--mono);font-size:11px;color:var(--muted);margin-right:10px">${String.fromCharCode(65+j)}</span>${opt}
-      </button>
-    `).join('');
-
-    card.innerHTML = `
-      <div class="q-num">Pregunta ${i+1} de ${questions.length}</div>
-      <div class="q-text">${q.q}</div>
-      <div class="options" id="opts-${i}">${opts}</div>
-      <div class="feedback" id="feedback-${i}"></div>
-    `;
+    card.id = 'qcard3-' + i;
+    const opts = q.opts.map((opt, j) => `<button class="option" id="opt3-${i}-${j}" onclick="selectOption3(${i},${j})"><span style="font-family:var(--mono);font-size:11px;color:var(--muted);margin-right:10px">${String.fromCharCode(65+j)}</span>${opt}</button>`).join('');
+    card.innerHTML = `<div class="q-num">Pregunta ${i+1} de ${questions3.length}</div><div class="q-text">${q.q}</div><div class="options" id="opts3-${i}">${opts}</div><div class="feedback" id="feedback3-${i}"></div>`;
     container.appendChild(card);
   });
-  updateProgress();
+  updateProgress3();
 }
 
-let selected = new Array(questions.length).fill(null);
-
-function selectOption(qi, oi) {
-  if (answered[qi]) return;
-  selected[qi] = oi;
-
-  // visually mark selection
-  for (let j = 0; j < questions[qi].opts.length; j++) {
-    const btn = document.getElementById(`opt-${qi}-${j}`);
+function selectOption3(qi, oi) {
+  if (answered3[qi]) return;
+  selected3[qi] = oi;
+  for (let j = 0; j < questions3[qi].opts.length; j++) {
+    const btn = document.getElementById(`opt3-${qi}-${j}`);
     btn.style.borderColor = j === oi ? 'var(--accent2)' : '';
     btn.style.background = j === oi ? 'rgba(124,106,245,0.08)' : '';
   }
-  updateProgress();
+  updateProgress3();
 }
 
-function updateProgress() {
-  const done = selected.filter(s => s !== null).length;
-  document.getElementById('progress-text').textContent = `${done} / ${questions.length}`;
-  document.getElementById('progress-bar').style.width = `${(done/questions.length)*100}%`;
+function updateProgress3() {
+  const done = selected3.filter(s => s !== null).length;
+  document.getElementById('progress-text3').textContent = done + ' / ' + questions3.length;
+  document.getElementById('progress-bar3').style.width = (done/questions3.length*100) + '%';
 }
 
-function checkAll() {
+function checkAll3() {
   let score = 0;
-  questions.forEach((q, i) => {
-    if (answered[i]) return;
-    answered[i] = true;
-    const userAnswer = selected[i];
-    const card = document.getElementById(`qcard-${i}`);
-    const fb = document.getElementById(`feedback-${i}`);
-
-    // disable all buttons
+  questions3.forEach((q, i) => {
+    if (answered3[i]) return;
+    answered3[i] = true;
+    const userAnswer = selected3[i];
+    const card = document.getElementById('qcard3-' + i);
+    const fb = document.getElementById('feedback3-' + i);
     for (let j = 0; j < q.opts.length; j++) {
-      const btn = document.getElementById(`opt-${qi}-${j}`);
+      const btn = document.getElementById(`opt3-${i}-${j}`);
+      btn.disabled = true; btn.style.borderColor = ''; btn.style.background = '';
+      if (j === q.correct) btn.classList.add('reveal-correct');
     }
-    for (let j = 0; j < q.opts.length; j++) {
-      const btn = document.getElementById(`opt-${i}-${j}`);
-      btn.disabled = true;
-      btn.style.borderColor = '';
-      btn.style.background = '';
-      if (j === q.correct) {
-        btn.classList.add('reveal-correct');
-      }
-    }
+    if (userAnswer === null) { card.classList.add('incorrect'); fb.className = 'feedback show fail'; fb.innerHTML = `❌ No has respost. Resposta correcta: <strong>${String.fromCharCode(65+q.correct)}</strong>. ${q.explanation}`; }
+    else if (userAnswer === q.correct) { score++; card.classList.add('correct'); document.getElementById(`opt3-${i}-${userAnswer}`).classList.add('selected-correct'); fb.className = 'feedback show ok'; fb.innerHTML = `✅ Correcte! ${q.explanation}`; }
+    else { card.classList.add('incorrect'); document.getElementById(`opt3-${i}-${userAnswer}`).classList.add('selected-wrong'); fb.className = 'feedback show fail'; fb.innerHTML = `❌ Incorrecte. La resposta correcta era <strong>${String.fromCharCode(65+q.correct)}: ${q.opts[q.correct]}</strong>. ${q.explanation}`; }
+  });
+  const pct = Math.round(score/questions3.length*100);
+  document.getElementById('result-score3').textContent = score + '/' + questions3.length;
+  let msg = pct >= 90 ? '🏆 Excel·lent! Domini complet del temari.' : pct >= 70 ? '✅ Molt bé! Repassa els errors i estaràs llest.' : pct >= 50 ? '📖 Aprovat just. Torna a repassar els filòsofs.' : '⚠️ Necessites repassar el temari de nou. No et rendeixis!';
+  document.getElementById('result-msg3').textContent = pct + '% — ' + msg;
+  const rb = document.getElementById('result-box3'); rb.classList.add('show'); rb.scrollIntoView({behavior:'smooth', block:'center'});
+}
 
-    if (userAnswer === null) {
-      card.classList.add('incorrect');
-      fb.className = 'feedback show fail';
-      fb.innerHTML = `❌ No has respost. Resposta correcta: <strong>${String.fromCharCode(65+q.correct)}</strong>. ${q.explanation}`;
-    } else if (userAnswer === q.correct) {
-      score++;
-      card.classList.add('correct');
-      document.getElementById(`opt-${i}-${userAnswer}`).classList.add('selected-correct');
-      fb.className = 'feedback show ok';
-      fb.innerHTML = `✅ Correcte! ${q.explanation}`;
-    } else {
-      card.classList.add('incorrect');
-      document.getElementById(`opt-${i}-${userAnswer}`).classList.add('selected-wrong');
-      fb.className = 'feedback show fail';
-      fb.innerHTML = `❌ Incorrecte. La resposta correcta era <strong>${String.fromCharCode(65+q.correct)}: ${q.opts[q.correct]}</strong>. ${q.explanation}`;
-    }
+function resetExam3() {
+  selected3 = new Array(questions3.length).fill(null);
+  answered3 = new Array(questions3.length).fill(false);
+  document.getElementById('result-box3').classList.remove('show');
+  buildQuestions3();
+}
+
+// ─── BUILD T2 ─────────────────────────────────────────────────────────────────
+let selected2 = new Array(questions2_test.length).fill(null);
+let answered2 = new Array(questions2_test.length).fill(false);
+
+function buildQuestions2() {
+  const container = document.getElementById('questions-container2');
+  container.innerHTML = '';
+
+  // Test questions
+  questions2_test.forEach((q, i) => {
+    const card = document.createElement('div');
+    card.className = 'question-card';
+    card.id = 'qcard2-' + i;
+    const opts = q.opts.map((opt, j) => `<button class="option" id="opt2-${i}-${j}" onclick="selectOption2(${i},${j})"><span style="font-family:var(--mono);font-size:11px;color:var(--muted);margin-right:10px">${String.fromCharCode(65+j)}</span>${opt}</button>`).join('');
+    card.innerHTML = `<div class="q-num">Pregunta TEST ${i+1} de ${questions2_test.length}</div><div class="q-text">${q.q}</div><div class="options" id="opts2-${i}">${opts}</div><div class="feedback" id="feedback2-${i}"></div>`;
+    container.appendChild(card);
   });
 
-  correct_count = score;
-  const resultBox = document.getElementById('result-box');
-  const resultScore = document.getElementById('result-score');
-  const resultMsg = document.getElementById('result-msg');
+  // Essay questions
+  questions2_essay.forEach((q, i) => {
+    const card = document.createElement('div');
+    card.className = 'essay-card';
+    card.id = 'ecard2-' + i;
+    card.innerHTML = `
+      <div class="q-num">Pregunta REDACCIÓ ${i+1} de ${questions2_essay.length}</div>
+      <div class="essay-prompt">${q.q.replace(/\n/g,'<br>')}</div>
+      <textarea class="essay-textarea" placeholder="Escriu aquí la teva resposta..."></textarea>
+      <br>
+      <button class="essay-reveal-btn" onclick="revealEssay(${i})">📋 Veure model de resposta</button>
+      <div class="essay-answer" id="essay-answer-${i}">${q.answer}</div>
+    `;
+    container.appendChild(card);
+  });
 
-  const pct = Math.round((score / questions.length) * 100);
-  resultScore.textContent = `${score}/${questions.length}`;
-
-  let msg = '';
-  if (pct >= 90) msg = '🏆 Excel·lent! Domini complet del temari.';
-  else if (pct >= 70) msg = '✅ Molt bé! Repassa els errors i estaràs llest.';
-  else if (pct >= 50) msg = '📖 Aprovat just. Torna a repassar els filòsofs.';
-  else msg = '⚠️ Necessites repassar el temari de nou. No et rendeixis!';
-
-  resultMsg.textContent = `${pct}% — ${msg}`;
-  resultBox.classList.add('show');
-  resultBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  updateProgress2();
 }
 
-function resetExam() {
-  selected = new Array(questions.length).fill(null);
-  answered = new Array(questions.length).fill(false);
-  correct_count = 0;
-  document.getElementById('result-box').classList.remove('show');
-  buildQuestions();
+function revealEssay(i) {
+  const ans = document.getElementById('essay-answer-' + i);
+  const card = document.getElementById('ecard2-' + i);
+  ans.classList.add('show');
+  card.classList.add('essay-revealed');
 }
 
-// Scroll reveal
+function selectOption2(qi, oi) {
+  if (answered2[qi]) return;
+  selected2[qi] = oi;
+  for (let j = 0; j < questions2_test[qi].opts.length; j++) {
+    const btn = document.getElementById(`opt2-${qi}-${j}`);
+    btn.style.borderColor = j === oi ? 'var(--accent2)' : '';
+    btn.style.background = j === oi ? 'rgba(124,106,245,0.08)' : '';
+  }
+  updateProgress2();
+}
+
+function updateProgress2() {
+  const done = selected2.filter(s => s !== null).length;
+  document.getElementById('progress-text2').textContent = done + ' / 18';
+  document.getElementById('progress-bar2').style.width = (done/questions2_test.length*100) + '%';
+}
+
+function checkAll2() {
+  let score = 0;
+  questions2_test.forEach((q, i) => {
+    if (answered2[i]) return;
+    answered2[i] = true;
+    const userAnswer = selected2[i];
+    const card = document.getElementById('qcard2-' + i);
+    const fb = document.getElementById('feedback2-' + i);
+    for (let j = 0; j < q.opts.length; j++) {
+      const btn = document.getElementById(`opt2-${i}-${j}`);
+      btn.disabled = true; btn.style.borderColor = ''; btn.style.background = '';
+      if (j === q.correct) btn.classList.add('reveal-correct');
+    }
+    if (userAnswer === null) { card.classList.add('incorrect'); fb.className = 'feedback show fail'; fb.innerHTML = `❌ No has respost. Resposta correcta: <strong>${String.fromCharCode(65+q.correct)}</strong>. ${q.explanation}`; }
+    else if (userAnswer === q.correct) { score++; card.classList.add('correct'); document.getElementById(`opt2-${i}-${userAnswer}`).classList.add('selected-correct'); fb.className = 'feedback show ok'; fb.innerHTML = `✅ Correcte! ${q.explanation}`; }
+    else { card.classList.add('incorrect'); document.getElementById(`opt2-${i}-${userAnswer}`).classList.add('selected-wrong'); fb.className = 'feedback show fail'; fb.innerHTML = `❌ Incorrecte. La resposta correcta era <strong>${String.fromCharCode(65+q.correct)}: ${q.opts[q.correct]}</strong>. ${q.explanation}`; }
+  });
+  const pct = Math.round(score/questions2_test.length*100);
+  document.getElementById('result-score2').textContent = score + '/' + questions2_test.length + ' test';
+  let msg = pct >= 90 ? '🏆 Excel·lent! Domini complet del temari.' : pct >= 70 ? '✅ Molt bé! No oblidis estudiar les redaccions.' : pct >= 50 ? '📖 Aprovat just. Repassa Hume, Kant i el mètode científic.' : '⚠️ Necessites repassar el temari. No et rendeixis!';
+  document.getElementById('result-msg2').textContent = pct + '% test — ' + msg;
+  const rb = document.getElementById('result-box2'); rb.classList.add('show'); rb.scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+function resetExam2() {
+  selected2 = new Array(questions2_test.length).fill(null);
+  answered2 = new Array(questions2_test.length).fill(false);
+  document.getElementById('result-box2').classList.remove('show');
+  buildQuestions2();
+}
+
+// ─── SCROLL REVEAL ────────────────────────────────────────────────────────────
 function revealOnScroll() {
   document.querySelectorAll('.reveal').forEach(el => {
     const rect = el.getBoundingClientRect();
-    if (rect.top < window.innerHeight * 0.92) {
-      el.classList.add('visible');
-    }
+    if (rect.top < window.innerHeight * 0.92) el.classList.add('visible');
   });
 }
 window.addEventListener('scroll', revealOnScroll);
 revealOnScroll();
 
-buildQuestions();
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+buildQuestions3();
+buildQuestions2();
 </script>
 </body>
 </html>
